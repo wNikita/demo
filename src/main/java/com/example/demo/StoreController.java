@@ -15,6 +15,7 @@ public class StoreController {
     @Autowired
     private StoreService storeService;
 
+
     @PostMapping
     public ResponseEntity<Store> createStore(@RequestBody Store store) {
         Store createdStore = storeService.createStore(store);
