@@ -24,8 +24,21 @@ public class StoreController {
     @PutMapping("/{storeId}")
     public ResponseEntity<Store> updateStore(@PathVariable Long storeId, @RequestBody Store updatedStore) {
         Store store = storeService.updateStore(storeId, updatedStore);
+        store.setStoreStatus(updatedStore.getStoreStatus());
         store.setName(updatedStore.getName());
         store.setEmail(updatedStore.getEmail());
+        store.setTitle(updatedStore.getTitle());
+        store.setIconPath(updatedStore.getIconPath());
+        store.setStoreAddress(updatedStore.getStoreAddress());
+        store.setBannerPath(updatedStore.getBannerPath());
+        store.setStoryTitle(updatedStore.getStoryTitle());
+        store.setStoryDescription(updatedStore.getStoryDescription());
+        store.setAnnouncementTitle(updatedStore.getAnnouncementTitle());
+        store.setAnnouncementDescription(updatedStore.getAnnouncementDescription());
+        store.setMessageToBuyers(updatedStore.getMessageToBuyers());
+        store.setOrderCustomizationAllowed(updatedStore.getOrderCustomizationAllowed());
+        store.setVacationMode(updatedStore.getVacationMode());
+        store.setVacationAutoReply(updatedStore.getVacationAutoReply());
         return ResponseEntity.ok(store);
     }
 
