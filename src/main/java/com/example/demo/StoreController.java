@@ -16,12 +16,15 @@ public class StoreController {
     private StoreService storeService;
 
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Store> createStore(@RequestBody Store store) {
         Store createdStore = storeService.createStore(store);
         return new ResponseEntity<>(createdStore, HttpStatus.CREATED);
     }
-
+    @GetMapping
+    public List<Store> getAllStores() {
+        return storeService.getAllStores();
+    }
     @PutMapping("/{storeId}")
     public ResponseEntity<Store> updateStore(@PathVariable Long storeId, @RequestBody Store updatedStore) {
         Store store = storeService.updateStore(storeId, updatedStore);
