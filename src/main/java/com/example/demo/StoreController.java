@@ -32,9 +32,9 @@ public class StoreController {
     }
 
     @GetMapping("/{storeId}")
-    public ResponseEntity<?> getStoreById(@PathVariable Long storeId) {
-            Store store = storeService.getStoreById(storeId);
-            return ResponseEntity.ok(store);
+    public ResponseEntity<Store> getStoreById(@PathVariable Long storeId) {
+        Store store = storeService.getStoreById(storeId);
+        return ResponseEntity.ok(store);
     }
 
     @GetMapping("/by-user/{userId}")
