@@ -1,18 +1,30 @@
-package com.example.demo;
+package com.example.demo.service;
 
 
 
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.model.Store;
+import com.example.demo.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
 public class StoreService {
 
     private final StoreRepository storeRepository;
+    @Autowired
+    private MessageSource messageSource;
 
+    public String getStoreCreatedMessage(String storeName) {
+        Locale locale = LocaleContextHolder.getLocale();
+        return messageSource.getMessage("store.created", new Object[]{storeName}, locale);
+    }
     @Autowired
     public StoreService(StoreRepository storeRepository) {
         this.storeRepository = storeRepository;
@@ -52,11 +64,14 @@ public class StoreService {
         return storeRepository.findAll();
     }
     public Store getStoreById(Long storeId) {
-        return storeRepository.findById(storeId).orElse(null);
+        return storeRepository.findById(storeId).
+         orElseThrow(() -> new ResourceNotFoundException("User not found with id :" + storeId));
+
     }
 
     public List<Store> getStoresByUserId(String  userId) {
         return storeRepository.findAllByUserId(userId);
     }
+
 }
 
