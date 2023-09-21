@@ -1,4 +1,7 @@
 package com.example.demo.dto;
+
+import org.antlr.v4.runtime.misc.NotNull;
+
 public class StoreDTO {
 
 
@@ -8,7 +11,6 @@ public class StoreDTO {
     private String name;
     private String email;
     private String title;
-
     private String iconPath;
     private String storeAddress;
     private String bannerPath;
