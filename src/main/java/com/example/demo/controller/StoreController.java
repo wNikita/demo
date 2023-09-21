@@ -44,13 +44,14 @@ public class StoreController {
     }
 
     @PutMapping("/{storeId}")
-    public ResponseEntity<Object> updateStore(@PathVariable Long storeId, @RequestBody StoreDTO updatedStore, BindingResult bindingResult) {
+    public ResponseEntity<Object> updateStore(@PathVariable Long storeId, @RequestBody StoreDTO updatedStore,BindingResult bindingResult) {
+        storeValidator.validate(updatedStore, bindingResult);
+
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = bindingResult.getFieldErrors().stream()
                     .map(fieldError -> fieldError.getDefaultMessage())
                     .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
-
         }
         Store store = storeService.updateStore(storeId, updatedStore);
         return ResponseEntity.ok(store);

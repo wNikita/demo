@@ -56,7 +56,6 @@ public class StoreService {
         Optional<Store> existingStore = storeRepository.findById(storeId);
         if (existingStore.isPresent()) {
             Store store = existingStore.get();
-            // Update store attributes based on your requirements
             store.setStoreStatus(updatedStore.getStoreStatus());
             store.setName(updatedStore.getName());
             store.setEmail(updatedStore.getEmail());
@@ -72,9 +71,9 @@ public class StoreService {
             store.setOrderCustomizationAllowed(updatedStore.getOrderCustomizationAllowed());
             store.setVacationMode(updatedStore.getVacationMode());
             store.setVacationAutoReply(updatedStore.getVacationAutoReply());
+
             return storeRepository.save(store);
         } else {
-            // Handle the case where the store with the given ID doesn't exist
             return null;
         }
     }
