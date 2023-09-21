@@ -1,38 +1,43 @@
 package com.example.demo.dto;
 
 
+import jakarta.validation.constraints.NotNull;
+
+import java.lang.annotation.Native;
 
 public class StoreDTO {
 
+
     private int storeId;
+    @NotNull
     private String storeStatus;
-
+    @NotNull
     private String userId;
-
+    @NotNull
     private String name;
-
+    @NotNull
     private String email;
-
+    @NotNull
     private String title;
-
+    @NotNull
 
     private String iconPath;
-
+    @NotNull
     private String storeAddress;
     private String bannerPath;
-
+    @NotNull
     private String storyTitle;
-
+    @NotNull
     private String storyDescription;
     private String announcementTitle;
     private String announcementDescription;
-
+    @NotNull
     private String messageToBuyers;
-
+    @NotNull
     private Boolean orderCustomizationAllowed;
-
+    @NotNull
     private Boolean vacationMode;
-
+    @NotNull
     private String vacationAutoReply;
 
     public int getStoreId() {

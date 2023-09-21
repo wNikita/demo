@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 
 
+import com.example.demo.dto.StoreDTO;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Store;
 import com.example.demo.repository.StoreRepository;
@@ -30,7 +31,25 @@ public class StoreService {
         this.storeRepository = storeRepository;
     }
 
-    public Store createStore(Store store) {
+    public Store createStore(StoreDTO storeDTO)
+    {
+        Store store=new Store();
+
+        store.setStoreStatus(storeDTO.getStoreStatus());
+        store.setName(storeDTO.getName());
+        store.setEmail(storeDTO.getEmail());
+        store.setTitle(storeDTO.getTitle());
+        store.setIconPath(storeDTO.getIconPath());
+        store.setStoreAddress(storeDTO.getStoreAddress());
+        store.setBannerPath(storeDTO.getBannerPath());
+        store.setStoryTitle(storeDTO.getStoryTitle());
+        store.setStoryDescription(storeDTO.getStoryDescription());
+        store.setAnnouncementTitle(storeDTO.getAnnouncementTitle());
+        store.setAnnouncementDescription(storeDTO.getAnnouncementDescription());
+        store.setMessageToBuyers(storeDTO.getMessageToBuyers());
+        store.setOrderCustomizationAllowed(storeDTO.getOrderCustomizationAllowed());
+        store.setVacationMode(storeDTO.getVacationMode());
+        store.setVacationAutoReply(storeDTO.getVacationAutoReply());
         return storeRepository.save(store);
     }
 
