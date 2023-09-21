@@ -1,25 +1,17 @@
-
-
-
 package com.example.demo.controller;
-
 
 import com.example.demo.dto.StoreDTO;
 import com.example.demo.model.Store;
-import com.example.demo.repository.StoreRepository;
 import com.example.demo.service.StoreService;
 import com.example.demo.validation.StoreValidator;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.Binding;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/stores")
@@ -32,11 +24,16 @@ public class StoreController {
     private StoreValidator storeValidator;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createStore( @RequestBody StoreDTO storeDTO, BindingResult bindingResult) {
+    public ResponseEntity<Object> createStore(@RequestBody StoreDTO storeDTO, BindingResult bindingResult) {
         storeValidator.validate(storeDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult.getAllErrors().toString());
-        }        Store createdStore = storeService.createStore(storeDTO);
+            List<String> errorMessages = bindingResult.getFieldErrors().stream()
+                    .map(fieldError -> fieldError.getDefaultMessage())
+                    .collect(Collectors.toList());
+            return ResponseEntity.badRequest().body(errorMessages);
+
+        }
+        Store createdStore = storeService.createStore(storeDTO);
         String message = storeService.getStoreCreatedMessage(createdStore.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
@@ -47,7 +44,14 @@ public class StoreController {
     }
 
     @PutMapping("/{storeId}")
-    public ResponseEntity<Store> updateStore(@PathVariable Long storeId, @RequestBody Store updatedStore) {
+    public ResponseEntity<Object> updateStore(@PathVariable Long storeId, @RequestBody StoreDTO updatedStore, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<String> errorMessages = bindingResult.getFieldErrors().stream()
+                    .map(fieldError -> fieldError.getDefaultMessage())
+                    .collect(Collectors.toList());
+            return ResponseEntity.badRequest().body(errorMessages);
+
+        }
         Store store = storeService.updateStore(storeId, updatedStore);
         return ResponseEntity.ok(store);
     }

@@ -53,7 +53,7 @@ public class StoreService {
         return storeRepository.save(store);
     }
 
-    public Store updateStore(Long storeId, Store updatedStore) {
+    public Store updateStore(Long storeId, StoreDTO updatedStore) {
         Optional<Store> existingStore = storeRepository.findById(storeId);
         if (existingStore.isPresent()) {
             Store store = existingStore.get();
