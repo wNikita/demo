@@ -9,7 +9,9 @@ import com.example.demo.model.Store;
 import com.example.demo.repository.StoreRepository;
 import com.example.demo.service.StoreService;
 import com.example.demo.validation.StoreValidator;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -30,10 +32,10 @@ public class StoreController {
     private StoreValidator storeValidator;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createStore(@RequestBody StoreDTO storeDTO, BindingResult bindingResult) {
+    public ResponseEntity<String> createStore( @RequestBody StoreDTO storeDTO, BindingResult bindingResult) {
         storeValidator.validate(storeDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body("Validation error occurred.");
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors().toString());
         }        Store createdStore = storeService.createStore(storeDTO);
         String message = storeService.getStoreCreatedMessage(createdStore.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body(message);

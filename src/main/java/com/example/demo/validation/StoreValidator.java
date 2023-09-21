@@ -18,8 +18,10 @@ public class StoreValidator implements Validator {
         StoreDTO storeDTO=(StoreDTO) target;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"storeStatus","filed.required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"userId","filed.required");
-        ValidationUtils.rejectIfEmpty(errors,"name","filed.required");
-        ValidationUtils.rejectIfEmpty(errors,"title","filed.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "field.required", "Store name is required");
+        if (storeDTO.getName() != null && storeDTO.getName().length() > 40) {
+            errors.rejectValue("name", "field.toolong", "Store name must not exceed 255 characters");
+        }        ValidationUtils.rejectIfEmpty(errors,"title","filed.required");
         ValidationUtils.rejectIfEmpty(errors,"email","filed.required");
         ValidationUtils.rejectIfEmpty(errors,"iconPath","filed.required");
         ValidationUtils.rejectIfEmpty(errors,"announcementTitle","filed.required");
