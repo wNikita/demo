@@ -18,7 +18,6 @@ public class StoreValidator implements Validator {
     public void validate(Object target, Errors errors) {
         StoreDTO storeDTO = (StoreDTO) target;
 
-        // Check for empty and length constraints for each field
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storeStatus", "required.field", "Store status is required.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userId", "required.field", "User ID is required.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "required.field", "Name is required.");
@@ -30,7 +29,6 @@ public class StoreValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storyDescription", "required.field", "Story description is required.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "messageToBuyers", "required.field", "Message to buyers is required.");
 
-        // Check length constraints for specific fields
         if (storeDTO.getStoreStatus() != null && storeDTO.getStoreStatus().length() > 15) {
             errors.rejectValue("storeStatus", "field.toolong", "Store status must not exceed 15 characters.");
         }
