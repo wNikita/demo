@@ -10,11 +10,9 @@ import java.util.List;
 @Repository
 public interface StoreRepository extends JpaRepository<Store, Long> {
 
-    // Add custom query methods if needed
-
     List<Store> findAllByUserId(String userId);
 
-    }
+}
 
 
 

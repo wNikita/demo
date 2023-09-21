@@ -31,7 +31,7 @@ public class Store {
     @Column(length = 50)
     private String storeAddress;
 
-    @Column(length = 50,nullable = false)
+    @Column(length = 50, nullable = false)
     private String bannerPath;
 
     @Column(length = 80)
@@ -40,10 +40,10 @@ public class Store {
     @Column(length = 100)
     private String storyDescription;
 
-    @Column(length = 40,nullable = false)
+    @Column(length = 40, nullable = false)
     private String announcementTitle;
 
-    @Column(length = 50,nullable = false)
+    @Column(length = 50, nullable = false)
     private String announcementDescription;
 
     @Column(length = 100)

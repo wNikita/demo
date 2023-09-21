@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 
-
 import com.example.demo.dto.StoreDTO;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Store;
@@ -26,14 +25,14 @@ public class StoreService {
         Locale locale = LocaleContextHolder.getLocale();
         return messageSource.getMessage("store.created", new Object[]{storeName}, locale);
     }
+
     @Autowired
     public StoreService(StoreRepository storeRepository) {
         this.storeRepository = storeRepository;
     }
 
-    public Store createStore(StoreDTO storeDTO)
-    {
-        Store store=new Store();
+    public Store createStore(StoreDTO storeDTO) {
+        Store store = new Store();
 
         store.setStoreStatus(storeDTO.getStoreStatus());
         store.setName(storeDTO.getName());
@@ -79,16 +78,18 @@ public class StoreService {
             return null;
         }
     }
+
     public List<Store> getAllStores() {
         return storeRepository.findAll();
     }
+
     public Store getStoreById(Long storeId) {
         return storeRepository.findById(storeId).
-         orElseThrow(() -> new ResourceNotFoundException("Store not found with id :" + storeId));
+                orElseThrow(() -> new ResourceNotFoundException("Store not found with id :" + storeId));
 
     }
 
-    public List<Store> getStoresByUserId(String  userId) {
+    public List<Store> getStoresByUserId(String userId) {
         List<Store> stores = storeRepository.findAllByUserId(userId);
         if (stores.isEmpty()) {
             throw new ResourceNotFoundException("No stores found for user with ID: " + userId);
