@@ -65,12 +65,16 @@ public class StoreService {
     }
     public Store getStoreById(Long storeId) {
         return storeRepository.findById(storeId).
-         orElseThrow(() -> new ResourceNotFoundException("User not found with id :" + storeId));
+         orElseThrow(() -> new ResourceNotFoundException("Store not found with id :" + storeId));
 
     }
 
     public List<Store> getStoresByUserId(String  userId) {
-        return storeRepository.findAllByUserId(userId);
+        List<Store> stores = storeRepository.findAllByUserId(userId);
+        if (stores.isEmpty()) {
+            throw new ResourceNotFoundException("No stores found for user with ID: " + userId);
+        }
+        return stores;
     }
 
 }
