@@ -1,10 +1,6 @@
 package com.example.demo.dto;
 
-import org.antlr.v4.runtime.misc.NotNull;
-
 public class StoreDTO {
-
-
     private int storeId;
     private String storeStatus;
     private String userId;
