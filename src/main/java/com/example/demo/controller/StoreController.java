@@ -46,7 +46,7 @@ public class StoreController {
     }
 
     @PutMapping("/{storeId}")
-    public ResponseEntity<Object> updateStore(@PathVariable Long storeId, @RequestBody StoreDTO updatedStore,BindingResult bindingResult) {
+    public ResponseEntity<Object> updateStore(@PathVariable Long storeId, @RequestBody StoreDTO updatedStore, BindingResult bindingResult) {
         storeValidator.validate(updatedStore, bindingResult);
 
         if (bindingResult.hasErrors()) {
