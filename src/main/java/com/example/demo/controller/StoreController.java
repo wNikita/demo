@@ -73,3 +73,8 @@ public class StoreController {
         return ResponseEntity.ok(stores);
     }
 }
+    @GetMapping("/by-user/{userId}")
+    public ResponseEntity<List<Store>> getStoresByUserId(@PathVariable String userId) {
+        List<Store> stores = storeService.getStoresByUserId(userId);
+        return ResponseEntity.ok(stores);
+    }
