@@ -23,4 +23,5 @@ public class GlobalExceptionHandler {
     }
 }
 
-
+Hello i am nikita currently working in narola infotech,i am completed my masters in kk wagh college i
+have nessecary knowledge of spring mvc,spring boot,hibernet.i have 1 year experience in java technology
