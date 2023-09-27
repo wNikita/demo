@@ -22,8 +22,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
-    Good Afternoon, Sir. I have completed the store API. Could you please review it once?
+//    Good Afternoon, Sir. I have completed the store API. Could you please review it once?
 
-        "Good morning, Sir. I have completed the store API. Could you please review it once?"
 
 
