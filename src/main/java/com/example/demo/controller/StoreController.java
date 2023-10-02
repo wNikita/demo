@@ -33,11 +33,11 @@ public class StoreController {
                     .collect(Collectors.toList());
             ErrorResponse errorResponse = new ErrorResponse(errorMessages);
 
-            return ResponseEntity.badRequest().body(errorMessages);
+            return ResponseEntity.badRequest().body(errorResponse);
         }
         Store createdStore = storeService.createStore(storeDTO);
-//        String message = storeService.getStoreCreatedMessage(createdStore.getName());
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdStore);
+        String message = storeService.getStoreCreatedMessage(createdStore.getName());
+        return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
     @GetMapping("/stores")
