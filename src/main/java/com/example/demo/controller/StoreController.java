@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/stores")
+@RequestMapping("/api")
 public class StoreController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class StoreController {
     @Autowired
     private StoreValidator storeValidator;
 
-    @PostMapping("/create")
+    @PostMapping("/stores")
     public ResponseEntity<Object> createStore(@RequestBody StoreDTO storeDTO, BindingResult bindingResult) {
         storeValidator.validate(storeDTO, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -40,12 +40,12 @@ public class StoreController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdStore);
     }
 
-    @GetMapping
+    @GetMapping("/stores")
     public List<Store> getAllStores() {
         return storeService.getAllStores();
     }
 
-    @PutMapping("/{storeId}")
+    @PutMapping("/stores/{storeId}")
     public ResponseEntity<Object> updateStore(@PathVariable Long storeId, @RequestBody StoreDTO updatedStore, BindingResult bindingResult) {
         storeValidator.validate(updatedStore, bindingResult);
 
@@ -59,7 +59,7 @@ public class StoreController {
         return ResponseEntity.ok(store);
     }
 
-    @GetMapping("/{storeId}")
+    @GetMapping("/stores/{storeId}")
     public ResponseEntity<Store> getStoreById(@PathVariable Long storeId) {
 
         Store store = storeService.getStoreById(storeId);
@@ -67,7 +67,7 @@ public class StoreController {
     }
 
 
-    @GetMapping("/by-user/{userId}")
+    @GetMapping("/users/{userId}")
     public ResponseEntity<List<Store>> getStoresByUserId(@PathVariable String userId) {
         List<Store> stores = storeService.getStoresByUserId(userId);
         return ResponseEntity.ok(stores);
