@@ -32,10 +32,8 @@ public class StoreController {
     public ResponseEntity<Object> createStore(@RequestBody StoreDTO storeDTO, BindingResult bindingResult) {
         storeValidator.validate(storeDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            List<String> errorMessages = bindingResult.getFieldErrors().stream()
-                    .map(fieldError -> fieldError.getField() +" " + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()))
-                    .collect(Collectors.toList());
-            ErrorResponse response=new ErrorResponse(errorMessages);
+            List<String> errorMessages = bindingResult.getFieldErrors().stream().map(fieldError -> fieldError.getField() + " " + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale())).collect(Collectors.toList());
+            ErrorResponse response = new ErrorResponse(errorMessages);
             return ResponseEntity.badRequest().body(response);
 
         }
@@ -53,9 +51,7 @@ public class StoreController {
     public ResponseEntity<Object> updateStore(@PathVariable Long storeId, @RequestBody StoreDTO updatedStore, BindingResult bindingResult) {
         storeValidator.validate(updatedStore, bindingResult);
         if (bindingResult.hasErrors()) {
-            List<String> errorMessages = bindingResult.getFieldErrors().stream()
-                    .map(fieldError -> fieldError.getField() +" " + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()))
-                    .collect(Collectors.toList());
+            List<String> errorMessages = bindingResult.getFieldErrors().stream().map(fieldError -> fieldError.getField() + " " + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale())).collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
 
         }

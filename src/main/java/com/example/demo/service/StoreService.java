@@ -88,9 +88,8 @@ public class StoreService {
         return storeRepository.findAll();
     }
 
-        public Store getStoreById(Long storeId) {
-        return storeRepository.findById(storeId).
-                orElseThrow(() -> new ResourceNotFoundException("Store not found with id :" + storeId));
+    public Store getStoreById(Long storeId) {
+        return storeRepository.findById(storeId).orElseThrow(() -> new ResourceNotFoundException("Store not found with id :" + storeId));
 
     }
 
