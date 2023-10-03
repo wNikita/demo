@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 
 import com.example.demo.dto.StoreDTO;
+import com.example.demo.exception.ErrorResponse;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Store;
 import com.example.demo.repository.StoreRepository;
@@ -80,10 +81,15 @@ public class StoreService {
     }
 
     public List<Store> getAllStores() {
+        List<Store> stores = storeRepository.findAll();
+
+        if (stores.isEmpty()) {
+            throw new ResourceNotFoundException("No stores are currently available");
+        }
         return storeRepository.findAll();
     }
 
-    public Store getStoreById(Long storeId) {
+        public Store getStoreById(Long storeId) {
         return storeRepository.findById(storeId).
                 orElseThrow(() -> new ResourceNotFoundException("Store not found with id :" + storeId));
 

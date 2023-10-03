@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.StoreDTO;
+import com.example.demo.exception.ErrorResponse;
 import com.example.demo.model.Store;
 import com.example.demo.service.StoreService;
 import com.example.demo.validation.StoreValidator;
@@ -32,9 +33,10 @@ public class StoreController {
         storeValidator.validate(storeDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = bindingResult.getFieldErrors().stream()
-                    .map(fieldError -> fieldError.getField() + ": " + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()))
+                    .map(fieldError -> fieldError.getField() +" " + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()))
                     .collect(Collectors.toList());
-            return ResponseEntity.badRequest().body(errorMessages);
+            ErrorResponse response=new ErrorResponse(errorMessages);
+            return ResponseEntity.badRequest().body(response);
 
         }
         Store createdStore = storeService.createStore(storeDTO);
@@ -52,7 +54,7 @@ public class StoreController {
         storeValidator.validate(updatedStore, bindingResult);
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = bindingResult.getFieldErrors().stream()
-                    .map(fieldError -> messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()))
+                    .map(fieldError -> fieldError.getField() +" " + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()))
                     .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
 

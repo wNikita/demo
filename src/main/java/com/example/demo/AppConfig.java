@@ -10,7 +10,7 @@ public class AppConfig {
     @Bean
     public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("application"); // Use the correct basename
+        messageSource.setBasename("message"); // Use the correct basename
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
