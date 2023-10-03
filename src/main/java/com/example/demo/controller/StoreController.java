@@ -12,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -29,11 +28,6 @@ public class StoreController {
         storeValidator.validate(storeDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
-
-
-//            ErrorResponse errorResponse = new ErrorResponse(errorMessages);
-
-//            return ResponseEntity.badRequest().body(errorMessages);
         }
         Store createdStore = storeService.createStore(storeDTO);
         String message = storeService.getStoreCreatedMessage(createdStore.getName());
