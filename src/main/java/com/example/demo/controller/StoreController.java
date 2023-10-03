@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.StoreDTO;
-import com.example.demo.exception.ErrorResponse;
 import com.example.demo.model.Store;
 import com.example.demo.service.StoreService;
 import com.example.demo.validation.StoreValidator;
@@ -42,7 +41,6 @@ public class StoreController {
     @PutMapping("/stores/{storeId}")
     public ResponseEntity<Object> updateStore(@PathVariable Long storeId, @RequestBody StoreDTO updatedStore, BindingResult bindingResult) {
         storeValidator.validate(updatedStore, bindingResult);
-
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
@@ -52,7 +50,6 @@ public class StoreController {
 
     @GetMapping("/stores/{storeId}")
     public ResponseEntity<Store> getStoreById(@PathVariable Long storeId) {
-
         Store store = storeService.getStoreById(storeId);
         return ResponseEntity.ok(store);
     }
@@ -63,5 +60,4 @@ public class StoreController {
         List<Store> stores = storeService.getStoresByUserId(userId);
         return ResponseEntity.ok(stores);
     }
-
 }
