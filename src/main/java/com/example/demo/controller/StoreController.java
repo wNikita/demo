@@ -35,7 +35,6 @@ public class StoreController {
             List<String> errorMessages = bindingResult.getFieldErrors().stream().map(fieldError -> fieldError.getField() + " " + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale())).collect(Collectors.toList());
             ErrorResponse response = new ErrorResponse(errorMessages);
             return ResponseEntity.badRequest().body(response);
-
         }
         Store createdStore = storeService.createStore(storeDTO);
         String message = storeService.getStoreCreatedMessage(createdStore.getName());
@@ -53,7 +52,6 @@ public class StoreController {
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = bindingResult.getFieldErrors().stream().map(fieldError -> fieldError.getField() + " " + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale())).collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
-
         }
         Store store = storeService.updateStore(storeId, updatedStore);
         return ResponseEntity.ok(store);
@@ -64,7 +62,6 @@ public class StoreController {
         Store store = storeService.getStoreById(storeId);
         return ResponseEntity.ok(store);
     }
-
 
     @GetMapping("/users/{userId}")
     public ResponseEntity<List<Store>> getStoresByUserId(@PathVariable String userId) {
