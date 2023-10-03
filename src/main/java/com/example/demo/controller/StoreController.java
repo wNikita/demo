@@ -28,12 +28,12 @@ public class StoreController {
     public ResponseEntity<Object> createStore(@RequestBody StoreDTO storeDTO, BindingResult bindingResult) {
         storeValidator.validate(storeDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            List<String> errorMessages = bindingResult.getFieldErrors().stream()
-                    .map(fieldError -> fieldError.getDefaultMessage())
-                    .collect(Collectors.toList());
-            ErrorResponse errorResponse = new ErrorResponse(errorMessages);
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
 
-            return ResponseEntity.badRequest().body(errorResponse);
+
+//            ErrorResponse errorResponse = new ErrorResponse(errorMessages);
+
+//            return ResponseEntity.badRequest().body(errorMessages);
         }
         Store createdStore = storeService.createStore(storeDTO);
         String message = storeService.getStoreCreatedMessage(createdStore.getName());
@@ -50,10 +50,7 @@ public class StoreController {
         storeValidator.validate(updatedStore, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            List<String> errorMessages = bindingResult.getFieldErrors().stream()
-                    .map(fieldError -> fieldError.getDefaultMessage())
-                    .collect(Collectors.toList());
-            return ResponseEntity.badRequest().body(errorMessages);
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
         Store store = storeService.updateStore(storeId, updatedStore);
         return ResponseEntity.ok(store);
