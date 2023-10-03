@@ -30,39 +30,39 @@ public class StoreValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "messageToBuyers", "required.field");
 
         if (storeDTO.getStoreStatus() != null && storeDTO.getStoreStatus().length() > 15) {
-            errors.rejectValue("storeStatus", "field.toolong", "Store status must not exceed 15 characters.");
+            errors.rejectValue("storeStatus", "field.toolong");
         }
 
         if (storeDTO.getUserId() != null && storeDTO.getUserId().length() > 40) {
-            errors.rejectValue("userId", "field.toolong", "User ID must not exceed 40 characters.");
+            errors.rejectValue("userId", "field.toolong");
         }
 
         if (storeDTO.getName() != null && storeDTO.getName().length() > 50) {
-            errors.rejectValue("name", "field.toolong", "Name must not exceed 50 characters.");
+            errors.rejectValue("name", "field.toolong");
         }
 
         if (storeDTO.getEmail() != null && storeDTO.getEmail().length() > 50) {
-            errors.rejectValue("email", "field.toolong", "Email must not exceed 50 characters.");
+            errors.rejectValue("email", "field.toolong");
         }
 
         if (storeDTO.getTitle() != null && storeDTO.getTitle().length() > 50) {
-            errors.rejectValue("title", "field.toolong", "Title must not exceed 50 characters.");
+            errors.rejectValue("title", "field.toolong");
         }
 
         if (storeDTO.getIconPath() != null && storeDTO.getIconPath().length() > 255) {
-            errors.rejectValue("iconPath", "field.toolong", "Icon path must not exceed 255 characters.");
+            errors.rejectValue("iconPath", "field.toolong");
         }
 
         if (storeDTO.getStoreAddress() != null && storeDTO.getStoreAddress().length() > 255) {
-            errors.rejectValue("storeAddress", "field.toolong", "Store address must not exceed 255 characters.");
+            errors.rejectValue("storeAddress", "field.toolong");
         }
 
         if (storeDTO.getStoryTitle() != null && storeDTO.getStoryTitle().length() > 80) {
-            errors.rejectValue("storyTitle", "field.toolong", "Story title must not exceed 80 characters.");
+            errors.rejectValue("storyTitle", "field.toolong");
         }
 
         if (storeDTO.getMessageToBuyers() != null && storeDTO.getMessageToBuyers().length() > 100) {
-            errors.rejectValue("messageToBuyers", "field.toolong", "Message to buyers must not exceed 100 characters.");
+            errors.rejectValue("messageToBuyers", "field.toolong");
         }
     }
 }
