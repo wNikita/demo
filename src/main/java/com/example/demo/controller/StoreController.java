@@ -32,7 +32,7 @@ public class StoreController {
         storeValidator.validate(storeDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = bindingResult.getFieldErrors().stream()
-                    .map(fieldError -> messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()))
+                    .map(fieldError -> fieldError.getField() + ": " + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()))
                     .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
 
