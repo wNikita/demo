@@ -1,7 +1,9 @@
 package com.example.demo.dto;
 
+
 public class StoreDTO {
     private int storeId;
+
     private String storeStatus;
     private String userId;
     private String name;

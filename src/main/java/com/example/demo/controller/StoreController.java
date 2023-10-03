@@ -5,12 +5,15 @@ import com.example.demo.model.Store;
 import com.example.demo.service.StoreService;
 import com.example.demo.validation.StoreValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -18,6 +21,8 @@ public class StoreController {
 
     @Autowired
     private StoreService storeService;
+    @Autowired
+    private MessageSource messageSource;
 
     @Autowired
     private StoreValidator storeValidator;
@@ -26,7 +31,11 @@ public class StoreController {
     public ResponseEntity<Object> createStore(@RequestBody StoreDTO storeDTO, BindingResult bindingResult) {
         storeValidator.validate(storeDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+            List<String> errorMessages = bindingResult.getFieldErrors().stream()
+                    .map(fieldError -> messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()))
+                    .collect(Collectors.toList());
+            return ResponseEntity.badRequest().body(errorMessages);
+
         }
         Store createdStore = storeService.createStore(storeDTO);
         String message = storeService.getStoreCreatedMessage(createdStore.getName());
@@ -42,7 +51,11 @@ public class StoreController {
     public ResponseEntity<Object> updateStore(@PathVariable Long storeId, @RequestBody StoreDTO updatedStore, BindingResult bindingResult) {
         storeValidator.validate(updatedStore, bindingResult);
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+            List<String> errorMessages = bindingResult.getFieldErrors().stream()
+                    .map(fieldError -> messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()))
+                    .collect(Collectors.toList());
+            return ResponseEntity.badRequest().body(errorMessages);
+
         }
         Store store = storeService.updateStore(storeId, updatedStore);
         return ResponseEntity.ok(store);
