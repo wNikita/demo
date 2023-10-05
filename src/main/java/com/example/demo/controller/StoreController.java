@@ -68,4 +68,5 @@ public class StoreController {
         List<Store> stores = storeService.getStoresByUserId(userId);
         return ResponseEntity.ok(stores);
     }
+
 }
