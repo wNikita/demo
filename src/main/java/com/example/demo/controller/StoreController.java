@@ -68,9 +68,4 @@ public class StoreController {
         List<Store> stores = storeService.getStoresByUserId(userId);
         return ResponseEntity.ok(stores);
     }
-    @GetMapping("/users/{userId}")
-    public ResponseEntity<List<Store>> getStoresByUserIdusing(@PathVariable String userId) {
-        List<Store> stores = storeService.getStoresByUserId(userId);
-        return ResponseEntity.ok(stores);
-    }
 }
