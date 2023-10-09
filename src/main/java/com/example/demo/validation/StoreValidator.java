@@ -29,6 +29,18 @@ public class StoreValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storyDescription", "required.field");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "messageToBuyers", "required.field");
 
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storeStatus", "required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userId", "required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "iconPath", "required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storeAddress", "required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storyTitle", "required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storyDescription", "required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "messageToBuyers", "required.field");
+
         if (storeDTO.getStoreStatus() != null && storeDTO.getStoreStatus().length() > 15) {
             errors.rejectValue("storeStatus", "field.toolong");
         }
