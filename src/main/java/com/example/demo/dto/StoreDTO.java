@@ -1,6 +1,5 @@
 package com.example.demo.dto;
 
-
 public class StoreDTO {
     private int storeId;
     private String storeStatus;
