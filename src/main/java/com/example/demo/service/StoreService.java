@@ -32,7 +32,6 @@ public class StoreService {
 
     public Store createStore(StoreDTO storeDTO) {
         Store store = new Store();
-
         store.setStoreStatus(storeDTO.getStoreStatus());
         store.setName(storeDTO.getName());
         store.setEmail(storeDTO.getEmail());
