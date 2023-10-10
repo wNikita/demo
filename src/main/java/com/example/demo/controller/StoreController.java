@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,7 @@ public class StoreController {
 
     @Autowired
     private StoreService storeService;
+
     @Autowired
     private MessageSource messageSource;
 
