@@ -30,39 +30,39 @@ public class StoreValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "messageToBuyers", "required.field");
 
         if (storeDTO.getStoreStatus() != null && storeDTO.getStoreStatus().length() > 15) {
-            errors.rejectValue("storeStatus", "field.toolong");
+            errors.rejectValue("storeStatus", "field.too.long");
         }
 
         if (storeDTO.getUserId() != null && storeDTO.getUserId().length() > 40) {
-            errors.rejectValue("userId", "field.toolong");
+            errors.rejectValue("userId", "field.too.long");
         }
 
         if (storeDTO.getName() != null && storeDTO.getName().length() > 50) {
-            errors.rejectValue("name", "field.toolong");
+            errors.rejectValue("name", "field.too.long");
         }
 
         if (storeDTO.getEmail() != null && storeDTO.getEmail().length() > 50) {
-            errors.rejectValue("email", "field.toolong");
+            errors.rejectValue("email", "field.too.long");
         }
 
         if (storeDTO.getTitle() != null && storeDTO.getTitle().length() > 50) {
-            errors.rejectValue("title", "field.toolong");
+            errors.rejectValue("title", "field.too.long");
         }
 
         if (storeDTO.getIconPath() != null && storeDTO.getIconPath().length() > 255) {
-            errors.rejectValue("iconPath", "field.toolong");
+            errors.rejectValue("iconPath", "field.too.long");
         }
 
         if (storeDTO.getStoreAddress() != null && storeDTO.getStoreAddress().length() > 255) {
-            errors.rejectValue("storeAddress", "field.toolong");
+            errors.rejectValue("storeAddress", "field.too.long");
         }
 
         if (storeDTO.getStoryTitle() != null && storeDTO.getStoryTitle().length() > 80) {
-            errors.rejectValue("storyTitle", "field.toolong");
+            errors.rejectValue("storyTitle", "field.too.long");
         }
 
         if (storeDTO.getMessageToBuyers() != null && storeDTO.getMessageToBuyers().length() > 100) {
-            errors.rejectValue("messageToBuyers", "field.toolong");
+            errors.rejectValue("messageToBuyers", "field.too.long");
         }
     }
 }
