@@ -70,4 +70,17 @@ public class StoreController {
         return ResponseEntity.ok(stores);
     }
 
+    @DeleteMapping("/stores/{id}")
+    public ResponseEntity<Object> deleteStore(@PathVariable Long id) {
+        Store store = storeService.getStoreById(id);
+        if (store != null) {
+            storeService.deleteStoreById(id);
+            String message = storeService.getStoreDeletedMessage(store.getName());
+            return ResponseEntity.status(HttpStatus.CREATED).body(message);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 }

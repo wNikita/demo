@@ -99,6 +99,18 @@ public class StoreService {
         }
         return stores;
     }
+    public Store deleteStoreById(Long id) {
+        Store store = storeRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Store not found with id:"+id));
 
+        if (store != null) {
+            storeRepository.deleteById(id);
+        }
+
+        return store;
+    }
+    public String getStoreDeletedMessage(String storeName) {
+        Locale locale = LocaleContextHolder.getLocale();
+        return messageSource.getMessage("store.deleted", new Object[]{storeName}, locale);
+    }
 }
 
