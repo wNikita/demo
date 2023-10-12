@@ -69,7 +69,7 @@ public class StoreController {
         List<Store> stores = storeService.getStoresByUserId(userId);
         return ResponseEntity.ok(stores);
     }
-
+    NRW: Hello Sir, could you please assign me some tasks?
     @DeleteMapping("/stores/{id}")
     public ResponseEntity<Object> deleteStore(@PathVariable Long id) {
         Store store = storeService.getStoreById(id);
