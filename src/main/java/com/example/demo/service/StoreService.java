@@ -38,13 +38,6 @@ public class StoreService {
         store.setTitle(storeDTO.getTitle());
         store.setIconPath(storeDTO.getIconPath());
         store.setStoreAddress(storeDTO.getStoreAddress());
-        store.setBannerPath(storeDTO.getBannerPath());
-        store.setStoryTitle(storeDTO.getStoryTitle());
-        store.setStoryDescription(storeDTO.getStoryDescription());
-        store.setAnnouncementTitle(storeDTO.getAnnouncementTitle());
-        store.setAnnouncementDescription(storeDTO.getAnnouncementDescription());
-        store.setMessageToBuyers(storeDTO.getMessageToBuyers());
-        store.setOrderCustomizationAllowed(storeDTO.getOrderCustomizationAllowed());
         store.setVacationMode(storeDTO.getVacationMode());
         store.setVacationAutoReply(storeDTO.getVacationAutoReply());
         return storeRepository.save(store);
