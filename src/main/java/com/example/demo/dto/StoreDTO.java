@@ -79,6 +79,9 @@ public class StoreDTO {
         return storeAddress;
     }
 
+    public void setStoreAddress(String storeAddress) {
+        this.storeAddress = storeAddress;
+    }
 
     public String getBannerPath() {
         return bannerPath;
