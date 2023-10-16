@@ -77,14 +77,14 @@ public class StoreService {
         }
     }
 
-//    public List<Store> getAllStores() {
-//        List<Store> stores = storeRepository.findAll();
-//
-//        if (stores.isEmpty()) {
-//            throw new ResourceNotFoundException("No stores are currently available");
-//        }
-//        return storeRepository.findAll();
-//    }
+    public List<Store> getAllStores() {
+        List<Store> stores = storeRepository.findAll();
+
+        if (stores.isEmpty()) {
+            throw new ResourceNotFoundException("No stores are currently available");
+        }
+        return storeRepository.findAll();
+    }
 
     public Store getStoreById(Long storeId) {
         return storeRepository.findById(storeId).orElseThrow(() -> new ResourceNotFoundException("Store not found with id :" + storeId));
