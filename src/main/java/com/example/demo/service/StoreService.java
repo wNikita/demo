@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @Service
 public class StoreService {
-
     private final StoreRepository storeRepository;
     @Autowired
     private MessageSource messageSource;
@@ -23,7 +22,6 @@ public class StoreService {
         Locale locale = LocaleContextHolder.getLocale();
         return messageSource.getMessage("store.created", new Object[]{storeName}, locale);
     }
-
     @Autowired
     public StoreService(StoreRepository storeRepository) {
         this.storeRepository = storeRepository;
