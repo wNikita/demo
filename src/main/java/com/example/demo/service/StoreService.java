@@ -85,7 +85,8 @@ public class StoreService {
     }
 
     public Store getStoreById(Long storeId) {
-        return storeRepository.findById(storeId).orElseThrow(() -> new ResourceNotFoundException("Store not found with id :" + storeId));
+        return storeRepository.findById(storeId).orElseThrow(() ->
+                new ResourceNotFoundException("Store not found with id :" + storeId));
 
     }
 
@@ -97,7 +98,8 @@ public class StoreService {
         return stores;
     }
     public Store deleteStoreById(Long id) {
-        Store store = storeRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Store not found with id:"+id));
+        Store store = storeRepository.findById(id).orElseThrow(()
+                ->new ResourceNotFoundException("Store not found with id:"+id));
 
         if (store != null) {
             storeRepository.deleteById(id);
