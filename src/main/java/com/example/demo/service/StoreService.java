@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.StoreDTO;
-import com.example.demo.exception.GlobalExceptionHandler;
+import com.example.demo.exception.DuplicateNameException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Store;
 import com.example.demo.repository.StoreRepository;
@@ -32,6 +32,14 @@ public class StoreService {
 
     public Store createStore(StoreDTO storeDTO) {
         Store store = new Store();
+        if (storeRepository.existsByName(storeDTO.getName())) {
+            throw new DuplicateNameException("Name already exists.");
+        }
+
+        if (storeRepository.existsByEmail(storeDTO.getEmail())) {
+            throw new DuplicateNameException("Email already exists.");
+        }
+
         store.setStoreStatus(storeDTO.getStoreStatus());
         store.setName(storeDTO.getName());
         store.setEmail(storeDTO.getEmail());
