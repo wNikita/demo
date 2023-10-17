@@ -100,10 +100,8 @@ public class StoreService {
     public Store deleteStoreById(Long id) {
         Store store = storeRepository.findById(id).orElseThrow(()
                 ->new ResourceNotFoundException("Store not found with id:"+id));
-
-        if (store != null) {
             storeRepository.deleteById(id);
-        }
+
 
         return store;
     }
