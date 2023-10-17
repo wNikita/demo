@@ -53,7 +53,10 @@ public class StoreController {
     public ResponseEntity<Object> updateStore(@PathVariable Long storeId, @RequestBody StoreDTO updatedStore, BindingResult bindingResult) {
         storeValidator.validate(updatedStore, bindingResult);
         if (bindingResult.hasErrors()) {
-            List<String> errorMessages = bindingResult.getFieldErrors().stream().map(fieldError -> fieldError.getField() + " " + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale())).collect(Collectors.toList());
+            List<String> errorMessages = bindingResult.getFieldErrors().stream().map(fieldError ->
+                            fieldError.getField()
+                    + " " + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()))
+                    .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
         }
         Store store = storeService.updateStore(storeId, updatedStore);

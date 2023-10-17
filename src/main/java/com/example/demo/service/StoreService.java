@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.StoreDTO;
+import com.example.demo.exception.GlobalExceptionHandler;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Store;
 import com.example.demo.repository.StoreRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -22,6 +24,7 @@ public class StoreService {
         Locale locale = LocaleContextHolder.getLocale();
         return messageSource.getMessage("store.created", new Object[]{storeName}, locale);
     }
+
     @Autowired
     public StoreService(StoreRepository storeRepository) {
         this.storeRepository = storeRepository;
@@ -50,30 +53,30 @@ public class StoreService {
 
     public Store updateStore(Long storeId, StoreDTO updatedStore) {
         Optional<Store> existingStore = storeRepository.findById(storeId);
-        if (existingStore.isPresent()) {
-            Store store = existingStore.get();
-            store.setStoreStatus(updatedStore.getStoreStatus());
-            store.setName(updatedStore.getName());
-            store.setEmail(updatedStore.getEmail());
-            store.setUserId(updatedStore.getUserId());
-            store.setTitle(updatedStore.getTitle());
-            store.setIconPath(updatedStore.getIconPath());
-            store.setStoreAddress(updatedStore.getStoreAddress());
-            store.setBannerPath(updatedStore.getBannerPath());
-            store.setStoryTitle(updatedStore.getStoryTitle());
-            store.setStoryDescription(updatedStore.getStoryDescription());
-            store.setAnnouncementTitle(updatedStore.getAnnouncementTitle());
-            store.setAnnouncementDescription(updatedStore.getAnnouncementDescription());
-            store.setMessageToBuyers(updatedStore.getMessageToBuyers());
-            store.setOrderCustomizationAllowed(updatedStore.getOrderCustomizationAllowed());
-            store.setVacationMode(updatedStore.getVacationMode());
-            store.setVacationAutoReply(updatedStore.getVacationAutoReply());
-
-            return storeRepository.save(store);
-        } else {
-            return null;
+        if (!existingStore.isPresent()) {
+            throw new ResourceNotFoundException("No store found with id: " + storeId);
         }
+        Store store = existingStore.get();
+        store.setStoreStatus(updatedStore.getStoreStatus());
+        store.setName(updatedStore.getName());
+        store.setEmail(updatedStore.getEmail());
+        store.setUserId(updatedStore.getUserId());
+        store.setTitle(updatedStore.getTitle());
+        store.setIconPath(updatedStore.getIconPath());
+        store.setStoreAddress(updatedStore.getStoreAddress());
+        store.setBannerPath(updatedStore.getBannerPath());
+        store.setStoryTitle(updatedStore.getStoryTitle());
+        store.setStoryDescription(updatedStore.getStoryDescription());
+        store.setAnnouncementTitle(updatedStore.getAnnouncementTitle());
+        store.setAnnouncementDescription(updatedStore.getAnnouncementDescription());
+        store.setMessageToBuyers(updatedStore.getMessageToBuyers());
+        store.setOrderCustomizationAllowed(updatedStore.getOrderCustomizationAllowed());
+        store.setVacationMode(updatedStore.getVacationMode());
+        store.setVacationAutoReply(updatedStore.getVacationAutoReply());
+
+        return storeRepository.save(store);
     }
+
 
     public List<Store> getAllStores() {
         List<Store> stores = storeRepository.findAll();
@@ -97,12 +100,14 @@ public class StoreService {
         }
         return stores;
     }
+
     public Store deleteStoreById(Long id) {
         Store store = storeRepository.findById(id).orElseThrow(()
-                ->new ResourceNotFoundException("Store not found with id:"+id));
-            storeRepository.deleteById(id);
+                -> new ResourceNotFoundException("Store not found with id:" + id));
+        storeRepository.deleteById(id);
         return store;
     }
+
     public String getStoreDeletedMessage(String storeName) {
         Locale locale = LocaleContextHolder.getLocale();
         return messageSource.getMessage("store.deleted", new Object[]{storeName}, locale);
