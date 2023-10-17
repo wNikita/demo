@@ -101,8 +101,6 @@ public class StoreService {
         Store store = storeRepository.findById(id).orElseThrow(()
                 ->new ResourceNotFoundException("Store not found with id:"+id));
             storeRepository.deleteById(id);
-
-
         return store;
     }
     public String getStoreDeletedMessage(String storeName) {
