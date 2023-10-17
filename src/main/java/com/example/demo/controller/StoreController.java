@@ -78,9 +78,8 @@ public class StoreController {
             storeService.deleteStoreById(id);
             String message = storeService.getStoreDeletedMessage(store.getName());
             return ResponseEntity.status(HttpStatus.CREATED).body(message);
-        } else {
-            return ResponseEntity.notFound().build();
         }
+            return ResponseEntity.notFound().build();
     }
 
 
