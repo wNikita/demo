@@ -55,7 +55,7 @@ public class StoreController {
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = bindingResult.getFieldErrors().stream().map(fieldError ->
                             fieldError.getField()
-                    + " " + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()))
+                                    + " " + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()))
                     .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
         }
@@ -74,6 +74,7 @@ public class StoreController {
         List<Store> stores = storeService.getStoresByUserId(userId);
         return ResponseEntity.ok(stores);
     }
+
     @DeleteMapping("/stores/{id}")
     public ResponseEntity<Object> deleteStore(@PathVariable Long id) {
         Store store = storeService.getStoreById(id);
@@ -82,7 +83,7 @@ public class StoreController {
             String message = storeService.getStoreDeletedMessage(store.getName());
             return ResponseEntity.status(HttpStatus.CREATED).body(message);
         }
-            return ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build();
     }
 
 

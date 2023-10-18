@@ -154,4 +154,8 @@ public class StoreDTO {
     public void setVacationAutoReply(String vacationAutoReply) {
         this.vacationAutoReply = vacationAutoReply;
     }
+    public boolean isStoreStatusTooLong() {
+        int maxAllowedLength = 15;  // You can make this dynamic or configurable
+        return storeStatus.length() > maxAllowedLength;
+    }
 }
