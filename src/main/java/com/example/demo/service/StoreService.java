@@ -10,6 +10,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -68,7 +69,6 @@ public class StoreService {
         store.setStoreStatus(updatedStore.getStoreStatus());
         store.setName(updatedStore.getName());
         store.setEmail(updatedStore.getEmail());
-        store.setUserId(updatedStore.getUserId());
         store.setTitle(updatedStore.getTitle());
         store.setIconPath(updatedStore.getIconPath());
         store.setStoreAddress(updatedStore.getStoreAddress());
@@ -120,5 +120,6 @@ public class StoreService {
         Locale locale = LocaleContextHolder.getLocale();
         return messageSource.getMessage("store.deleted", new Object[]{storeName}, locale);
     }
+
 }
 

@@ -1,7 +1,6 @@
 package com.example.demo.dto;
 
 public class StoreDTO {
-    private int storeId;
     private String storeStatus;
     private String userId;
     private String name;
@@ -19,13 +18,6 @@ public class StoreDTO {
     private Boolean vacationMode;
     private String vacationAutoReply;
 
-    public int getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
-    }
 
     public String getStoreStatus() {
         return storeStatus;
@@ -155,7 +147,7 @@ public class StoreDTO {
         this.vacationAutoReply = vacationAutoReply;
     }
     public boolean isStoreStatusTooLong() {
-        int maxAllowedLength = 15;  // You can make this dynamic or configurable
+        int maxAllowedLength = 15;
         return storeStatus.length() > maxAllowedLength;
     }
 }

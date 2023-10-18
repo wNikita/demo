@@ -64,9 +64,26 @@ public class StoreController {
     }
 
     @GetMapping("/stores/{storeId}")
-    public ResponseEntity<Store> getStoreById(@PathVariable Long storeId) {
+    public ResponseEntity<StoreDTO> getStoreById(@PathVariable Long storeId) {
         Store store = storeService.getStoreById(storeId);
-        return ResponseEntity.ok(store);
+        StoreDTO storeDTO=new StoreDTO();
+        storeDTO.setStoreStatus(store.getStoreStatus());
+        storeDTO.setName(store.getName());
+        storeDTO.setEmail(store.getEmail());
+        storeDTO.setUserId(store.getUserId());
+        storeDTO.setTitle(store.getTitle());
+        storeDTO.setIconPath(store.getIconPath());
+        storeDTO.setStoreAddress(store.getStoreAddress());
+        storeDTO.setBannerPath(store.getBannerPath());
+        storeDTO.setStoryTitle(store.getStoryTitle());
+        storeDTO.setStoryDescription(store.getStoryDescription());
+        storeDTO.setAnnouncementTitle(store.getAnnouncementTitle());
+        storeDTO.setAnnouncementDescription(store.getAnnouncementDescription());
+        storeDTO.setMessageToBuyers(store.getMessageToBuyers());
+        storeDTO.setOrderCustomizationAllowed(store.getOrderCustomizationAllowed());
+        storeDTO.setVacationMode(store.getVacationMode());
+        storeDTO.setVacationAutoReply(store.getVacationAutoReply());
+        return ResponseEntity.ok(storeDTO);
     }
 
     @GetMapping("/users/{userId}")

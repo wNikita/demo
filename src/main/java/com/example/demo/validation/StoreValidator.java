@@ -49,13 +49,6 @@ public class StoreValidator implements Validator {
             errors.rejectValue("title", "field.too.long");
         }
 
-        if (storeDTO.getIconPath() != null && storeDTO.getIconPath().length() > 255) {
-            errors.rejectValue("iconPath", "field.too.long");
-        }
-
-        if (storeDTO.getStoreAddress() != null && storeDTO.getStoreAddress().length() > 255) {
-            errors.rejectValue("storeAddress", "field.too.long");
-        }
 
         if (storeDTO.getStoryTitle() != null && storeDTO.getStoryTitle().length() > 80) {
             errors.rejectValue("storyTitle", "field.too.long");
