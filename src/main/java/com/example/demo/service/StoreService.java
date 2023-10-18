@@ -69,6 +69,7 @@ public class StoreService {
         store.setStoreStatus(updatedStore.getStoreStatus());
         store.setName(updatedStore.getName());
         store.setEmail(updatedStore.getEmail());
+        store.setUserId(updatedStore.getUserId());
         store.setTitle(updatedStore.getTitle());
         store.setIconPath(updatedStore.getIconPath());
         store.setStoreAddress(updatedStore.getStoreAddress());
