@@ -71,13 +71,7 @@ public class StoreService {
         store.setEmail(updatedStore.getEmail());
         store.setTitle(updatedStore.getTitle());
         store.setIconPath(updatedStore.getIconPath());
-        store.setStoreAddress(updatedStore.getStoreAddress());
-        store.setBannerPath(updatedStore.getBannerPath());
-        store.setStoryTitle(updatedStore.getStoryTitle());
-        store.setStoryDescription(updatedStore.getStoryDescription());
-        store.setAnnouncementTitle(updatedStore.getAnnouncementTitle());
-        store.setAnnouncementDescription(updatedStore.getAnnouncementDescription());
-        store.setMessageToBuyers(updatedStore.getMessageToBuyers());
+
         store.setOrderCustomizationAllowed(updatedStore.getOrderCustomizationAllowed());
         store.setVacationMode(updatedStore.getVacationMode());
         store.setVacationAutoReply(updatedStore.getVacationAutoReply());
