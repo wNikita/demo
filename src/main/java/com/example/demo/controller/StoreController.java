@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,8 +46,13 @@ public class StoreController {
     }
 
     @GetMapping("/stores")
-    public List<Store> getAllStores() {
-        return storeService.getAllStores();
+    public ResponseEntity<List<StoreDTO>> getAllStores() {
+        List<Store> stores = storeService.getAllStores();
+        List<StoreDTO> storeDTOs = new ArrayList<>();
+        for (Store store : stores) {
+            storeDTOs.add(StoreDTO.fromStore(store));
+        }
+        return ResponseEntity.ok(storeDTOs);
     }
 
     @PutMapping("/stores/{storeId}")
@@ -66,42 +72,27 @@ public class StoreController {
     @GetMapping("/stores/{storeId}")
     public ResponseEntity<StoreDTO> getStoreById(@PathVariable Long storeId) {
         Store store = storeService.getStoreById(storeId);
-        StoreDTO storeDTO=new StoreDTO();
-        storeDTO.setStoreStatus(store.getStoreStatus());
-        storeDTO.setName(store.getName());
-        storeDTO.setEmail(store.getEmail());
-        storeDTO.setUserId(store.getUserId());
-        storeDTO.setTitle(store.getTitle());
-        storeDTO.setIconPath(store.getIconPath());
-        storeDTO.setStoreAddress(store.getStoreAddress());
-        storeDTO.setBannerPath(store.getBannerPath());
-        storeDTO.setStoryTitle(store.getStoryTitle());
-        storeDTO.setStoryDescription(store.getStoryDescription());
-        storeDTO.setAnnouncementTitle(store.getAnnouncementTitle());
-        storeDTO.setAnnouncementDescription(store.getAnnouncementDescription());
-        storeDTO.setMessageToBuyers(store.getMessageToBuyers());
-        storeDTO.setOrderCustomizationAllowed(store.getOrderCustomizationAllowed());
-        storeDTO.setVacationMode(store.getVacationMode());
-        storeDTO.setVacationAutoReply(store.getVacationAutoReply());
+        StoreDTO storeDTO = StoreDTO.fromStore(store);
         return ResponseEntity.ok(storeDTO);
     }
 
     @GetMapping("/users/{userId}")
-    public ResponseEntity<List<Store>> getStoresByUserId(@PathVariable String userId) {
+    public ResponseEntity<List<StoreDTO>> getStoresByUserId(@PathVariable String userId) {
         List<Store> stores = storeService.getStoresByUserId(userId);
-        return ResponseEntity.ok(stores);
+        List<StoreDTO> storeDTOs = new ArrayList<>();
+        for (Store store : stores) {
+            storeDTOs.add(StoreDTO.fromStore(store));
+        }
+        return ResponseEntity.ok(storeDTOs);
     }
 
     @DeleteMapping("/stores/{id}")
     public ResponseEntity<Object> deleteStore(@PathVariable Long id) {
         Store store = storeService.getStoreById(id);
-        if (store != null) {
-            storeService.deleteStoreById(id);
-            String message = storeService.getStoreDeletedMessage(store.getName());
-            return ResponseEntity.status(HttpStatus.CREATED).body(message);
-        }
-        return ResponseEntity.notFound().build();
-    }
+        storeService.deleteStoreById(id);
+        String message = storeService.getStoreDeletedMessage(store.getName());
+        return ResponseEntity.status(HttpStatus.CREATED).body(message);
 
+    }
 
 }

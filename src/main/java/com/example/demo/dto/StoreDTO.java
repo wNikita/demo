@@ -1,6 +1,10 @@
 package com.example.demo.dto;
 
+import com.example.demo.model.Store;
+
 public class StoreDTO {
+
+    private int storeId;
     private String storeStatus;
     private String userId;
     private String name;
@@ -18,6 +22,13 @@ public class StoreDTO {
     private Boolean vacationMode;
     private String vacationAutoReply;
 
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
 
     public String getStoreStatus() {
         return storeStatus;
@@ -146,8 +157,26 @@ public class StoreDTO {
     public void setVacationAutoReply(String vacationAutoReply) {
         this.vacationAutoReply = vacationAutoReply;
     }
-    public boolean isStoreStatusTooLong() {
-        int maxAllowedLength = 15;
-        return storeStatus.length() > maxAllowedLength;
+
+    public static StoreDTO fromStore(Store store) {
+        StoreDTO storeDTO = new StoreDTO();
+        storeDTO.setStoreId(store.getStoreId());
+        storeDTO.setStoreStatus(store.getStoreStatus());
+        storeDTO.setName(store.getName());
+        storeDTO.setEmail(store.getEmail());
+        storeDTO.setUserId(store.getUserId());
+        storeDTO.setTitle(store.getTitle());
+        storeDTO.setIconPath(store.getIconPath());
+        storeDTO.setStoreAddress(store.getStoreAddress());
+        storeDTO.setBannerPath(store.getBannerPath());
+        storeDTO.setStoryTitle(store.getStoryTitle());
+        storeDTO.setStoryDescription(store.getStoryDescription());
+        storeDTO.setAnnouncementTitle(store.getAnnouncementTitle());
+        storeDTO.setAnnouncementDescription(store.getAnnouncementDescription());
+        storeDTO.setMessageToBuyers(store.getMessageToBuyers());
+        storeDTO.setOrderCustomizationAllowed(store.getOrderCustomizationAllowed());
+        storeDTO.setVacationMode(store.getVacationMode());
+        storeDTO.setVacationAutoReply(store.getVacationAutoReply());
+        return storeDTO;
     }
 }

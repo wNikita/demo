@@ -29,32 +29,29 @@ public class StoreValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storyDescription", "required.field");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "messageToBuyers", "required.field");
 
-        if (storeDTO.isStoreStatusTooLong()) {
-            errors.rejectValue("storeStatus", "field.too.long");
-        }
 
-        if (storeDTO.getUserId() != null && storeDTO.getUserId().length() > 40) {
+        if (storeDTO.getUserId().length() > 40) {
             errors.rejectValue("userId", "field.too.long");
         }
 
-        if (storeDTO.getName() != null && storeDTO.getName().length() > 50) {
+        if (storeDTO.getName().length() > 50) {
             errors.rejectValue("name", "field.too.long");
         }
 
-        if (storeDTO.getEmail() != null && storeDTO.getEmail().length() > 50) {
+        if (storeDTO.getEmail().length() > 50) {
             errors.rejectValue("email", "field.too.long");
         }
 
-        if (storeDTO.getTitle() != null && storeDTO.getTitle().length() > 50) {
+        if (storeDTO.getTitle().length() > 50) {
             errors.rejectValue("title", "field.too.long");
         }
 
 
-        if (storeDTO.getStoryTitle() != null && storeDTO.getStoryTitle().length() > 80) {
+        if (storeDTO.getStoryTitle().length() > 80) {
             errors.rejectValue("storyTitle", "field.too.long");
         }
 
-        if (storeDTO.getMessageToBuyers() != null && storeDTO.getMessageToBuyers().length() > 100) {
+        if (storeDTO.getMessageToBuyers().length() > 100) {
             errors.rejectValue("messageToBuyers", "field.too.long");
         }
     }
