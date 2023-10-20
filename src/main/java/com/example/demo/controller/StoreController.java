@@ -32,6 +32,7 @@ public class StoreController {
     @PostMapping("/stores")
     public ResponseEntity<Object> createStore(@RequestBody StoreDTO storeDTO, BindingResult bindingResult) {
         storeValidator.validate(storeDTO, bindingResult);
+
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = bindingResult.getFieldErrors().stream().map
                     (fieldError -> fieldError.getField() + " " + messageSource.getMessage

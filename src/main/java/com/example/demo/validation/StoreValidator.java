@@ -6,6 +6,9 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Component
 public class StoreValidator implements Validator {
 
@@ -29,30 +32,28 @@ public class StoreValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storyDescription", "required.field");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "messageToBuyers", "required.field");
 
-
-        if (storeDTO.getUserId().length() > 40) {
-            errors.rejectValue("userId", "field.too.long");
+        if (!isValidEmail(storeDTO.getEmail())) {
+            errors.rejectValue("email", "field.invalidEmail");
         }
+        validateFieldLength(storeDTO.getStoreStatus(), "storeStatus", 15, errors);
+        validateFieldLength(storeDTO.getName(), "name", 50, errors);
+        validateFieldLength(storeDTO.getTitle(), "title", 100, errors);
+        validateFieldLength(storeDTO.getEmail(), "email", 50, errors);
+        validateFieldLength(storeDTO.getStoryTitle(), "storyTitle", 80, errors);
+        validateFieldLength(storeDTO.getAnnouncementTitle(), "announcementTitle", 50, errors);
+        validateFieldLength(storeDTO.getMessageToBuyers(), "messageToBuyer", 100, errors);
 
-        if (storeDTO.getName().length() > 50) {
-            errors.rejectValue("name", "field.too.long");
-        }
+    }
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
 
-        if (storeDTO.getEmail().length() > 50) {
-            errors.rejectValue("email", "field.too.long");
-        }
-
-        if (storeDTO.getTitle().length() > 50) {
-            errors.rejectValue("title", "field.too.long");
-        }
-
-
-        if (storeDTO.getStoryTitle().length() > 80) {
-            errors.rejectValue("storyTitle", "field.too.long");
-        }
-
-        if (storeDTO.getMessageToBuyers().length() > 100) {
-            errors.rejectValue("messageToBuyers", "field.too.long");
+    private void validateFieldLength(String fieldValue, String fieldName, int maxLength, Errors errors) {
+        if (fieldValue.length() > maxLength) {
+            errors.rejectValue(fieldName,"field.too.long", new Object[]{maxLength},"");
         }
     }
 }

@@ -7,51 +7,56 @@ public class Store {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(name = "store_id")
     private int storeId;
 
-    @Column(length = 15)
+    @Column(name = "store_status", length = 15, nullable = false)
     private String storeStatus;
 
-    @Column(length = 40)
+    @Column(name = "user_id", length = 40, nullable = false)
     private String userId;
 
-    @Column(length = 50)
+    @Column(name = "name", length = 50, nullable = false)
     private String name;
 
-    @Column(length = 50)
+    @Column(name = "email", length = 50, nullable = false)
     private String email;
 
-    @Column(length = 50)
+    @Column(name = "title", length = 50, nullable = false)
     private String title;
 
-    @Column(length = 50)
+    @Column(name = "icon_path", nullable = false,length = 100)
     private String iconPath;
 
-    @Column(length = 50)
+    @Column(name = "store_address",length = 100)
     private String storeAddress;
 
-    @Column(length = 50, nullable = false)
+
+    @Column(name = "banner_path",length = 50)
     private String bannerPath;
 
-    @Column(length = 80)
+    @Column(name = "story_title", length = 80, nullable = false)
     private String storyTitle;
 
-    @Column(length = 100)
+    @Column(name = "story_description",  nullable = false,length = 100)
     private String storyDescription;
 
-    @Column(length = 40, nullable = false)
+    @Column(name = "announcement_title", length = 50)
     private String announcementTitle;
 
-    @Column(length = 50, nullable = false)
+    @Column(name = "announcement_description",length = 100)
     private String announcementDescription;
 
-    @Column(length = 100)
+    @Column(name = "message_to_buyers", length = 100, nullable = false)
     private String messageToBuyers;
+
+    @Column(name = "order_customization_allowed", nullable = false,length = 100)
     private Boolean orderCustomizationAllowed;
+
+    @Column(name = "vacation_mode", nullable = false,length = 100)
     private Boolean vacationMode;
 
-    @Column(length = 100)
+    @Column(name = "vacation_auto_replay", nullable = false,length = 100)
     private String vacationAutoReply;
 
     public int getStoreId() {
