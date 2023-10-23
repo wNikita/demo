@@ -42,7 +42,7 @@ public class StoreService implements StoreServiceInterface {
     @Override
     public StoreDTO getStoreById(Long storeId) {
         Optional<Store> storeOptional = storeRepository.findByStoreId(storeId);
-        if (!storeOptional.isPresent()) {
+        if (storeOptional.isEmpty()) {
             throw new ResourceNotFoundException("Store with ID " + storeId + " not found");
         }
         return storeMapper.mapToStoreDTO(storeOptional.get());
@@ -51,7 +51,7 @@ public class StoreService implements StoreServiceInterface {
     @Override
     public void updateStore(Long storeId, StoreDTO updatedStoreDTO) {
         Optional<Store> storeOptional = storeRepository.findById(storeId);
-        if (!storeOptional.isPresent()) {
+        if (storeOptional.isEmpty()) {
             throw new ResourceNotFoundException("Store with ID " + storeId + " not found");
         } else {
             Store store = storeOptional.get();
@@ -68,17 +68,16 @@ public class StoreService implements StoreServiceInterface {
         }
         return storeMapper.mapToStoreDTO(stores.get());
     }
+
     @Override
     public List<StoreDTO> getAllStore() {
         List<Store> stores = storeRepository.findAll();
         if (stores.isEmpty()) {
             throw new ResourceNotFoundException("No stores are currently available");
         }
-        List<StoreDTO> storeDTOs = stores.stream()
-                .map(storeMapper::mapToStoreDTO)
-                .collect(Collectors.toList());
+        return stores.stream().map(storeMapper::mapToStoreDTO).collect(Collectors.toList());
 
-        return storeDTOs;    }
+    }
 
 }
 
