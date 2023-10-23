@@ -1,123 +1,71 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.StoreDTO;
-import com.example.demo.exception.DuplicateNameException;
+import com.example.demo.exception.DuplicateKeyException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Store;
 import com.example.demo.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 @Service
-public class StoreService {
+public class StoreService implements StoreServiceInterface {
     private final StoreRepository storeRepository;
-    @Autowired
-    private MessageSource messageSource;
 
-    public String getStoreCreatedMessage(String storeName) {
-        Locale locale = LocaleContextHolder.getLocale();
-        return messageSource.getMessage("store.created", new Object[]{storeName}, locale);
-    }
+    @Autowired
+    private StoreMapper storeMapper;
 
     @Autowired
     public StoreService(StoreRepository storeRepository) {
         this.storeRepository = storeRepository;
     }
 
-    public Store createStore(StoreDTO storeDTO) {
-        Store store = new Store();
+    @Override
+    public void createStore(StoreDTO storeDTO) {
         if (storeRepository.existsByName(storeDTO.getName())) {
-            throw new DuplicateNameException("Name already exists.");
-        }
+            throw new DuplicateKeyException("Name already exists.");
 
+        }
         if (storeRepository.existsByEmail(storeDTO.getEmail())) {
-            throw new DuplicateNameException("Email already exists.");
+            throw new DuplicateKeyException("Email already exists.");
         }
-
-        store.setStoreStatus(storeDTO.getStoreStatus());
-        store.setName(storeDTO.getName());
-        store.setEmail(storeDTO.getEmail());
-        store.setUserId(storeDTO.getUserId());
-        store.setTitle(storeDTO.getTitle());
-        store.setIconPath(storeDTO.getIconPath());
-        store.setStoreAddress(storeDTO.getStoreAddress());
-        store.setBannerPath(storeDTO.getBannerPath());
-        store.setStoryTitle(storeDTO.getStoryTitle());
-        store.setStoryDescription(storeDTO.getStoryDescription());
-        store.setAnnouncementTitle(storeDTO.getAnnouncementTitle());
-        store.setAnnouncementDescription(storeDTO.getAnnouncementDescription());
-        store.setMessageToBuyers(storeDTO.getMessageToBuyers());
-        store.setOrderCustomizationAllowed(storeDTO.getOrderCustomizationAllowed());
-        store.setVacationMode(storeDTO.getVacationMode());
-        store.setVacationAutoReply(storeDTO.getVacationAutoReply());
-        return storeRepository.save(store);
-    }
-
-    public Store updateStore(Long storeId, StoreDTO updatedStore) {
-        Optional<Store> existingStore = storeRepository.findById(storeId);
-        if (!existingStore.isPresent()) {
-            throw new ResourceNotFoundException("No store found with id: " + storeId);
+        if (storeRepository.existsByUserId(storeDTO.getUserId())) {
+            throw new DuplicateKeyException("You can have only one store per user");
         }
-        Store store = existingStore.get();
-        store.setStoreStatus(updatedStore.getStoreStatus());
-        store.setName(updatedStore.getName());
-        store.setEmail(updatedStore.getEmail());
-        store.setTitle(updatedStore.getTitle());
-        store.setIconPath(updatedStore.getIconPath());
-        store.setStoreAddress(updatedStore.getStoreAddress());
-        store.setBannerPath(updatedStore.getBannerPath());
-        store.setStoryTitle(updatedStore.getStoryTitle());
-        store.setStoryDescription(updatedStore.getStoryDescription());
-        store.setAnnouncementTitle(updatedStore.getAnnouncementTitle());
-        store.setAnnouncementDescription(updatedStore.getAnnouncementDescription());
-        store.setMessageToBuyers(updatedStore.getMessageToBuyers());
-        store.setOrderCustomizationAllowed(updatedStore.getOrderCustomizationAllowed());
-        store.setVacationMode(updatedStore.getVacationMode());
-        store.setVacationAutoReply(updatedStore.getVacationAutoReply());
-
-        return storeRepository.save(store);
+        Store store = storeMapper.mapToStore(storeDTO);
+        storeRepository.save(store);
     }
 
-
-    public List<Store> getAllStores() {
-        List<Store> stores = storeRepository.findAll();
-
-        if (stores.isEmpty()) {
-            throw new ResourceNotFoundException("No stores are currently available");
+    @Override
+    public StoreDTO getStoreById(Long storeId) {
+        Optional<Store> storeOptional = storeRepository.findByStoreId(storeId);
+        if (!storeOptional.isPresent()) {
+            throw new ResourceNotFoundException("Store with ID " + storeId + " not found");
         }
-        return storeRepository.findAll();
+        return storeMapper.mapToStoreDTO(storeOptional.get());
     }
 
-    public Store getStoreById(Long storeId) {
-        return storeRepository.findById(storeId).orElseThrow(() ->
-                new ResourceNotFoundException("Store not found with id :" + storeId));
-
+    @Override
+    public void updateStore(Long storeId, StoreDTO updatedStoreDTO) {
+        Optional<Store> storeOptional = storeRepository.findById(storeId);
+        if (!storeOptional.isPresent()) {
+            throw new ResourceNotFoundException("Store with ID " + storeId + " not found");
+        } else {
+            Store store = storeOptional.get();
+            storeMapper.mapToEntity(updatedStoreDTO, store);
+            storeRepository.save(store);
+        }
     }
 
-    public List<Store> getStoresByUserId(String userId) {
-        List<Store> stores = storeRepository.findAllByUserId(userId);
+    @Override
+    public StoreDTO getStoresByUserId(String userId) {
+        Optional<Store> stores = storeRepository.findByUserId(userId);
         if (stores.isEmpty()) {
             throw new ResourceNotFoundException("No stores found for user with ID: " + userId);
         }
-        return stores;
-    }
-
-    public Store deleteStoreById(Long id) {
-        Store store = storeRepository.findById(id).orElseThrow(()
-                -> new ResourceNotFoundException("Store not found with id:" + id));
-        storeRepository.deleteById(id);
-        return store;
-    }
-
-    public String getStoreDeletedMessage(String storeName) {
-        Locale locale = LocaleContextHolder.getLocale();
-        return messageSource.getMessage("store.deleted", new Object[]{storeName}, locale);
+        return storeMapper.mapToStoreDTO(stores.get());
     }
 
 }

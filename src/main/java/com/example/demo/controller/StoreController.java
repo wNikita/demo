@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.StoreDTO;
 import com.example.demo.exception.ErrorResponse;
 import com.example.demo.model.Store;
+import com.example.demo.service.StoreMapper;
 import com.example.demo.service.StoreService;
 import com.example.demo.validation.StoreValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +31,9 @@ public class StoreController {
     @Autowired
     private StoreValidator storeValidator;
 
+    @Autowired
+    private StoreMapper storeMapper;
+
     @PostMapping("/stores")
     public ResponseEntity<Object> createStore(@RequestBody StoreDTO storeDTO, BindingResult bindingResult) {
         storeValidator.validate(storeDTO, bindingResult);
@@ -40,19 +45,8 @@ public class StoreController {
             ErrorResponse response = new ErrorResponse(errorMessages);
             return ResponseEntity.badRequest().body(response);
         }
-        Store createdStore = storeService.createStore(storeDTO);
-        String message = storeService.getStoreCreatedMessage(createdStore.getName());
-        return ResponseEntity.status(HttpStatus.CREATED).body(message);
-    }
-
-    @GetMapping("/stores")
-    public ResponseEntity<List<StoreDTO>> getAllStores() {
-        List<Store> stores = storeService.getAllStores();
-        List<StoreDTO> storeDTOs = new ArrayList<>();
-        for (Store store : stores) {
-            storeDTOs.add(StoreDTO.fromStore(store));
-        }
-        return ResponseEntity.ok(storeDTOs);
+        storeService.createStore(storeDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(HttpStatus.OK);
     }
 
     @PutMapping("/stores/{storeId}")
@@ -65,34 +59,22 @@ public class StoreController {
                     .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
         }
-        Store store = storeService.updateStore(storeId, updatedStore);
-        return ResponseEntity.ok(store);
+        storeService.updateStore(storeId, updatedStore);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping("/stores/{storeId}")
-    public ResponseEntity<StoreDTO> getStoreById(@PathVariable Long storeId) {
-        Store store = storeService.getStoreById(storeId);
-        StoreDTO storeDTO = StoreDTO.fromStore(store);
-        return ResponseEntity.ok(storeDTO);
+    public ResponseEntity<Store> getStoreById(@PathVariable Long storeId) {
+        StoreDTO storeDTO = storeService.getStoreById(storeId);
+        Store store = storeMapper.mapToStore(storeDTO);
+        return ResponseEntity.ok(store);
     }
 
     @GetMapping("/users/{userId}")
-    public ResponseEntity<List<StoreDTO>> getStoresByUserId(@PathVariable String userId) {
-        List<Store> stores = storeService.getStoresByUserId(userId);
-        List<StoreDTO> storeDTOs = new ArrayList<>();
-        for (Store store : stores) {
-            storeDTOs.add(StoreDTO.fromStore(store));
-        }
-        return ResponseEntity.ok(storeDTOs);
-    }
-
-    @DeleteMapping("/stores/{id}")
-    public ResponseEntity<Object> deleteStore(@PathVariable Long id) {
-        Store store = storeService.getStoreById(id);
-        storeService.deleteStoreById(id);
-        String message = storeService.getStoreDeletedMessage(store.getName());
-        return ResponseEntity.status(HttpStatus.CREATED).body(message);
-
+    public ResponseEntity<Store> getStoresByUserId(@PathVariable String userId) {
+        StoreDTO storeDTO = storeService.getStoresByUserId(userId);
+        Store store = storeMapper.mapToStore(storeDTO);
+        return ResponseEntity.ok(store);
     }
 
 }
