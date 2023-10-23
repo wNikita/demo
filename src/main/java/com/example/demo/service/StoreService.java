@@ -8,7 +8,9 @@ import com.example.demo.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StoreService implements StoreServiceInterface {
@@ -67,6 +69,17 @@ public class StoreService implements StoreServiceInterface {
         }
         return storeMapper.mapToStoreDTO(stores.get());
     }
+    @Override
+    public List<StoreDTO> getAllStore() {
+        List<Store> stores = storeRepository.findAll();
+        if (stores.isEmpty()) {
+            throw new ResourceNotFoundException("No stores are currently available");
+        }
+        List<StoreDTO> storeDTOs = stores.stream()
+                .map(storeMapper::mapToStoreDTO)
+                .collect(Collectors.toList());
+
+        return storeDTOs;    }
 
 }
 

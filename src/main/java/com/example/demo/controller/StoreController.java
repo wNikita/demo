@@ -76,5 +76,13 @@ public class StoreController {
         Store store = storeMapper.mapToStore(storeDTO);
         return ResponseEntity.ok(store);
     }
+    @GetMapping("/stores")
+    public ResponseEntity<List<Store>> getAllStores() {
+        List<StoreDTO> storeDTOs = storeService.getAllStore();
+        List<Store> stores = storeDTOs.stream()
+                .map(storeMapper::mapToStore)
+                .collect(Collectors.toList());
 
+        return ResponseEntity.ok(stores);
+    }
 }
