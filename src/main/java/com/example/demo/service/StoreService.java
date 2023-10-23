@@ -28,7 +28,6 @@ public class StoreService implements StoreServiceInterface {
     public void createStore(StoreDTO storeDTO) {
         if (storeRepository.existsByName(storeDTO.getName())) {
             throw new DuplicateKeyException("Name already exists.");
-
         }
         if (storeRepository.existsByEmail(storeDTO.getEmail())) {
             throw new DuplicateKeyException("Email already exists.");
@@ -49,17 +48,17 @@ public class StoreService implements StoreServiceInterface {
         return storeMapper.mapToStoreDTO(storeOptional.get());
     }
 
-//    @Override
-//    public void updateStore(Long storeId, StoreDTO updatedStoreDTO) {
-//        Optional<Store> storeOptional = storeRepository.findById(storeId);
-//        if (!storeOptional.isPresent()) {
-//            throw new ResourceNotFoundException("Store with ID " + storeId + " not found");
-//        } else {
-//            Store store = storeOptional.get();
-//            storeMapper.mapToEntity(updatedStoreDTO, store);
-//            storeRepository.save(store);
-//        }
-//    }
+    @Override
+    public void updateStore(Long storeId, StoreDTO updatedStoreDTO) {
+        Optional<Store> storeOptional = storeRepository.findById(storeId);
+        if (!storeOptional.isPresent()) {
+            throw new ResourceNotFoundException("Store with ID " + storeId + " not found");
+        } else {
+            Store store = storeOptional.get();
+            storeMapper.mapToEntity(updatedStoreDTO, store);
+            storeRepository.save(store);
+        }
+    }
 
     @Override
     public StoreDTO getStoresByUserId(String userId) {
