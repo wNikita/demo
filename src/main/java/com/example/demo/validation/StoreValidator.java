@@ -44,6 +44,11 @@ public class StoreValidator implements Validator {
         validateFieldLength(storeDTO.getMessageToBuyers(), "messageToBuyer", 100, errors);
 
     }
+    private void validateFieldLength(String fieldValue, String fieldName, int maxLength, Errors errors) {
+        if (fieldValue.length() > maxLength) {
+            errors.rejectValue(fieldName,"field.too.long", new Object[]{maxLength},"");
+        }
+    }
     private boolean isValidEmail(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(emailRegex);
@@ -51,10 +56,6 @@ public class StoreValidator implements Validator {
         return matcher.matches();
     }
 
-    private void validateFieldLength(String fieldValue, String fieldName, int maxLength, Errors errors) {
-        if (fieldValue.length() > maxLength) {
-            errors.rejectValue(fieldName,"field.too.long", new Object[]{maxLength},"");
-        }
-    }
+
 }
 
