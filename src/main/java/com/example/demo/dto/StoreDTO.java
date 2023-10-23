@@ -158,25 +158,4 @@ public class StoreDTO {
         this.vacationAutoReply = vacationAutoReply;
     }
 
-    public static StoreDTO fromStore(Store store) {
-        StoreDTO storeDTO = new StoreDTO();
-        storeDTO.setStoreId(store.getStoreId());
-        storeDTO.setStoreStatus(store.getStoreStatus());
-        storeDTO.setName(store.getName());
-        storeDTO.setEmail(store.getEmail());
-        storeDTO.setUserId(store.getUserId());
-        storeDTO.setTitle(store.getTitle());
-        storeDTO.setIconPath(store.getIconPath());
-        storeDTO.setStoreAddress(store.getStoreAddress());
-        storeDTO.setBannerPath(store.getBannerPath());
-        storeDTO.setStoryTitle(store.getStoryTitle());
-        storeDTO.setStoryDescription(store.getStoryDescription());
-        storeDTO.setAnnouncementTitle(store.getAnnouncementTitle());
-        storeDTO.setAnnouncementDescription(store.getAnnouncementDescription());
-        storeDTO.setMessageToBuyers(store.getMessageToBuyers());
-        storeDTO.setOrderCustomizationAllowed(store.getOrderCustomizationAllowed());
-        storeDTO.setVacationMode(store.getVacationMode());
-        storeDTO.setVacationAutoReply(store.getVacationAutoReply());
-        return storeDTO;
-    }
 }

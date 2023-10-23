@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,9 +38,10 @@ public class StoreController {
         storeValidator.validate(storeDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            List<String> errorMessages = bindingResult.getFieldErrors().stream().map
-                    (fieldError -> fieldError.getField() + " " + messageSource.getMessage
-                            (fieldError, LocaleContextHolder.getLocale())).collect(Collectors.toList());
+            List<String> errorMessages = bindingResult.getFieldErrors().stream()
+                    .map(fieldError -> fieldError.getField() + " "
+                            + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale())).
+                    collect(Collectors.toList());
             ErrorResponse response = new ErrorResponse(errorMessages);
             return ResponseEntity.badRequest().body(response);
         }
@@ -53,10 +53,10 @@ public class StoreController {
     public ResponseEntity<Object> updateStore(@PathVariable Long storeId, @RequestBody StoreDTO updatedStore, BindingResult bindingResult) {
         storeValidator.validate(updatedStore, bindingResult);
         if (bindingResult.hasErrors()) {
-            List<String> errorMessages = bindingResult.getFieldErrors().stream().map(fieldError ->
-                            fieldError.getField()
-                                    + " " + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale()))
-                    .collect(Collectors.toList());
+            List<String> errorMessages = bindingResult.getFieldErrors().stream()
+                    .map(fieldError -> fieldError.getField() + " "
+                            + messageSource.getMessage(fieldError, LocaleContextHolder.getLocale())).
+                    collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
         }
         storeService.updateStore(storeId, updatedStore);
@@ -76,13 +76,11 @@ public class StoreController {
         Store store = storeMapper.mapToStore(storeDTO);
         return ResponseEntity.ok(store);
     }
+
     @GetMapping("/stores")
     public ResponseEntity<List<Store>> getAllStores() {
         List<StoreDTO> storeDTOs = storeService.getAllStore();
-        List<Store> stores = storeDTOs.stream()
-                .map(storeMapper::mapToStore)
-                .collect(Collectors.toList());
-
+        List<Store> stores = storeDTOs.stream().map(storeMapper::mapToStore).collect(Collectors.toList());
         return ResponseEntity.ok(stores);
     }
 }
