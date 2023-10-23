@@ -9,6 +9,7 @@ public interface StoreServiceInterface {
     void createStore(StoreDTO storeDTO);
 
     List<StoreDTO> getAllStore();
+
     StoreDTO getStoreById(Long storeId);
 
     StoreDTO getStoresByUserId(String userId);

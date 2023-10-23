@@ -1,4 +1,5 @@
 package com.example.demo.service;
+
 import com.example.demo.dto.StoreDTO;
 import com.example.demo.model.Store;
 import org.modelmapper.ModelMapper;
@@ -16,6 +17,7 @@ public class StoreMapper {
     public StoreDTO mapToStoreDTO(Store store) {
         return modelMapper.map(store, StoreDTO.class);
     }
+
     public Store mapToStore(StoreDTO storeDTO) {
         return modelMapper.map(storeDTO, Store.class);
     }

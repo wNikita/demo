@@ -25,38 +25,38 @@ public class Store {
     @Column(name = "title", length = 50, nullable = false)
     private String title;
 
-    @Column(name = "icon_path", nullable = false,length = 100)
+    @Column(name = "icon_path", nullable = false, length = 100)
     private String iconPath;
 
-    @Column(name = "store_address",length = 100)
+    @Column(name = "store_address", length = 100)
     private String storeAddress;
 
 
-    @Column(name = "banner_path",length = 50)
+    @Column(name = "banner_path", length = 50)
     private String bannerPath;
 
     @Column(name = "story_title", length = 80, nullable = false)
     private String storyTitle;
 
-    @Column(name = "story_description",  nullable = false,length = 100)
+    @Column(name = "story_description", nullable = false, length = 100)
     private String storyDescription;
 
     @Column(name = "announcement_title", length = 50)
     private String announcementTitle;
 
-    @Column(name = "announcement_description",length = 100)
+    @Column(name = "announcement_description", length = 100)
     private String announcementDescription;
 
     @Column(name = "message_to_buyers", length = 100, nullable = false)
     private String messageToBuyers;
 
-    @Column(name = "order_customization_allowed", nullable = false,length = 100)
+    @Column(name = "order_customization_allowed", nullable = false, length = 100)
     private Boolean orderCustomizationAllowed;
 
-    @Column(name = "vacation_mode", nullable = false,length = 100)
+    @Column(name = "vacation_mode", nullable = false, length = 100)
     private Boolean vacationMode;
 
-    @Column(name = "vacation_auto_replay", nullable = false,length = 100)
+    @Column(name = "vacation_auto_replay", nullable = false, length = 100)
     private String vacationAutoReply;
 
     public int getStoreId() {
