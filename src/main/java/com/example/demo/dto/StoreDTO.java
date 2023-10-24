@@ -1,7 +1,5 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.Store;
-
 public class StoreDTO {
 
     private int storeId;
