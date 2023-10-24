@@ -31,7 +31,6 @@ public class Store {
     @Column(name = "store_address", length = 100)
     private String storeAddress;
 
-
     @Column(name = "banner_path", length = 50)
     private String bannerPath;
 
