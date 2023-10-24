@@ -53,11 +53,11 @@ public class StoreService implements StoreServiceInterface {
         Optional<Store> storeOptional = storeRepository.findById(storeId);
         if (storeOptional.isEmpty()) {
             throw new ResourceNotFoundException("Store with ID " + storeId + " not found");
-        } else {
-            Store store = storeOptional.get();
-            storeMapper.mapToEntity(updatedStoreDTO, store);
-            storeRepository.save(store);
         }
+        Store store = storeOptional.get();
+        storeMapper.mapToEntity(updatedStoreDTO, store);
+        storeRepository.save(store);
+
     }
 
     @Override
