@@ -45,6 +45,7 @@ public class StoreValidator implements Validator {
 
     }
 
+    private void validateFieldLength(String fieldValue, String fieldName, int maxLength, Errors errors) {
         if (fieldValue.length() > maxLength) {
             errors.rejectValue(fieldName, "field.too.long", new Object[]{maxLength}, "");
         }
