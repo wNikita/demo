@@ -32,6 +32,9 @@ public class StoreValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storyDescription", "required.field");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "messageToBuyers", "required.field");
 
+        if (!isValidEmail(storeDTO.getEmail())) {
+            errors.rejectValue("email", "field.invalidEmail");
+        }
         validateFieldLength(storeDTO.getStoreStatus(), "storeStatus", 15, errors);
         validateFieldLength(storeDTO.getName(), "name", 50, errors);
         validateFieldLength(storeDTO.getTitle(), "title", 100, errors);
