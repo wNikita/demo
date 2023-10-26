@@ -73,6 +73,7 @@ public class StoreService implements StoreServiceInterface {
 
     }
 
+
     @Override
     public List<StoreDTO> getAllStore() {
         List<Store> stores = storeRepository.findAll();
