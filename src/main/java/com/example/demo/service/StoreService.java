@@ -64,12 +64,13 @@ public class StoreService implements StoreServiceInterface {
     }
 
     @Override
-    public StoreDTO getStoresByUserId(String userId) {
-        Optional<Store> stores = storeRepository.findByUserId(userId);
+    public List<StoreDTO> getStoresByUserId(String userId) {
+        List<Store> stores = storeRepository.findByUserId(userId);
         if (stores.isEmpty()) {
             throw new ResourceNotFoundException("No stores found for user with ID: " + userId);
         }
-        return storeMapper.mapToStoreDTO(stores.get());
+        return stores.stream().map(storeMapper::mapToStoreDTO).collect(Collectors.toList());
+
     }
 
     @Override

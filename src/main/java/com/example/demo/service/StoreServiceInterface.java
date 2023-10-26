@@ -12,7 +12,7 @@ public interface StoreServiceInterface {
 
     StoreDTO getStoreById(Long storeId);
 
-    StoreDTO getStoresByUserId(String userId);
+    List<StoreDTO> getStoresByUserId(String userId);
 
 
     void updateStore(Long storeId, StoreDTO updatedStoreDTO);

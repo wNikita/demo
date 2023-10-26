@@ -35,21 +35,57 @@ public class StoreValidator implements Validator {
         if (!isValidEmail(storeDTO.getEmail())) {
             errors.rejectValue("email", "field.invalidEmail");
         }
-        validateFieldLength(storeDTO.getStoreStatus(), "storeStatus", 15, errors);
-        validateFieldLength(storeDTO.getName(), "name", 50, errors);
-        validateFieldLength(storeDTO.getTitle(), "title", 100, errors);
-        validateFieldLength(storeDTO.getEmail(), "email", 50, errors);
-        validateFieldLength(storeDTO.getStoryTitle(), "storyTitle", 80, errors);
-        validateFieldLength(storeDTO.getAnnouncementTitle(), "announcementTitle", 50, errors);
-        validateFieldLength(storeDTO.getMessageToBuyers(), "messageToBuyer", 100, errors);
+        if (storeDTO.getStoreStatus() != null && storeDTO.getStoreStatus().length() > 15) {
+            errors.rejectValue("storeStatus", "field.too.long");
+        }
 
-    }
+        if (storeDTO.getUserId() != null && storeDTO.getUserId().length() > 40) {
+            errors.rejectValue("userId", "field.too.long");
+        }
 
-    private void validateFieldLength(String fieldValue, String fieldName, int maxLength, Errors errors) {
-        if (fieldValue.length() > maxLength) {
-            errors.rejectValue(fieldName, "field.too.long", new Object[]{maxLength}, "");
+        if (storeDTO.getName() != null && storeDTO.getName().length() > 50) {
+            errors.rejectValue("name", "field.too.long");
+        }
+
+        if (storeDTO.getEmail() != null && storeDTO.getEmail().length() > 50) {
+            errors.rejectValue("email", "field.too.long");
+        }
+
+        if (storeDTO.getTitle() != null && storeDTO.getTitle().length() > 50) {
+            errors.rejectValue("title", "field.too.long");
+        }
+
+        if (storeDTO.getIconPath() != null && storeDTO.getIconPath().length() > 255) {
+            errors.rejectValue("iconPath", "field.too.long");
+        }
+
+        if (storeDTO.getStoreAddress() != null && storeDTO.getStoreAddress().length() > 255) {
+            errors.rejectValue("storeAddress", "field.too.long");
+        }
+
+        if (storeDTO.getStoryTitle() != null && storeDTO.getStoryTitle().length() > 80) {
+            errors.rejectValue("storyTitle", "field.too.long");
+        }
+
+        if (storeDTO.getMessageToBuyers() != null && storeDTO.getMessageToBuyers().length() > 100) {
+            errors.rejectValue("messageToBuyers", "field.too.long");
         }
     }
+//        validateFieldLength(storeDTO.getStoreStatus(), "storeStatus", 15, errors);
+//        validateFieldLength(storeDTO.getName(), "name", 50, errors);
+//        validateFieldLength(storeDTO.getTitle(), "title", 100, errors);
+//        validateFieldLength(storeDTO.getEmail(), "email", 50, errors);
+//        validateFieldLength(storeDTO.getStoryTitle(), "storyTitle", 80, errors);
+//        validateFieldLength(storeDTO.getAnnouncementTitle(), "announcementTitle", 50, errors);
+//        validateFieldLength(storeDTO.getMessageToBuyers(), "messageToBuyer", 100, errors);
+//
+//    }
+//
+//    private void validateFieldLength(String fieldValue, String fieldName, int maxLength, Errors errors) {
+//        if (fieldValue.length() > maxLength) {
+//            errors.rejectValue(fieldName, "field.too.long", new Object[]{maxLength}, "");
+//        }
+//    }
 
     private boolean isValidEmail(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
@@ -57,7 +93,5 @@ public class StoreValidator implements Validator {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-
-
 }
 

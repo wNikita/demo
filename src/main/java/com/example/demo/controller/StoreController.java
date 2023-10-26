@@ -71,9 +71,9 @@ public class StoreController {
     }
 
     @GetMapping("/users/{userId}")
-    public ResponseEntity<Store> getStoresByUserId(@PathVariable String userId) {
-        StoreDTO storeDTO = storeService.getStoresByUserId(userId);
-        Store store = storeMapper.mapToStore(storeDTO);
+    public ResponseEntity<List<Store>> getStoresByUserId(@PathVariable String userId) {
+        List<StoreDTO> storeDTO = storeService.getStoresByUserId(userId);
+        List<Store> store = storeDTO.stream().map(storeMapper::mapToStore).collect(Collectors.toList());
         return ResponseEntity.ok(store);
     }
 
