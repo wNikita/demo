@@ -32,9 +32,6 @@ public class StoreService implements StoreServiceInterface {
         if (storeRepository.existsByEmail(storeDTO.getEmail())) {
             throw new DuplicateKeyException("Email already exists.");
         }
-        if (storeRepository.existsByUserId(storeDTO.getUserId())) {
-            throw new DuplicateKeyException("You can have only one store per user");
-        }
         Store store = storeMapper.mapToStore(storeDTO);
         storeRepository.save(store);
     }
