@@ -39,10 +39,6 @@ public class StoreValidator implements Validator {
             errors.rejectValue("storeStatus", "field.too.long");
         }
 
-        if (storeDTO.getUserId() != null && storeDTO.getUserId().length() > 40) {
-            errors.rejectValue("userId", "field.too.long");
-        }
-
         if (storeDTO.getName() != null && storeDTO.getName().length() > 50) {
             errors.rejectValue("name", "field.too.long");
         }
@@ -51,20 +47,15 @@ public class StoreValidator implements Validator {
             errors.rejectValue("email", "field.too.long");
         }
 
-        if (storeDTO.getTitle() != null && storeDTO.getTitle().length() > 50) {
+        if (storeDTO.getTitle() != null && storeDTO.getTitle().length() > 80) {
             errors.rejectValue("title", "field.too.long");
-        }
-
-        if (storeDTO.getIconPath() != null && storeDTO.getIconPath().length() > 255) {
-            errors.rejectValue("iconPath", "field.too.long");
-        }
-
-        if (storeDTO.getStoreAddress() != null && storeDTO.getStoreAddress().length() > 255) {
-            errors.rejectValue("storeAddress", "field.too.long");
         }
 
         if (storeDTO.getStoryTitle() != null && storeDTO.getStoryTitle().length() > 80) {
             errors.rejectValue("storyTitle", "field.too.long");
+        }
+        if (storeDTO.getAnnouncementTitle() != null && storeDTO.getStoryTitle().length() > 100) {
+            errors.rejectValue("announcementTitle", "field.too.long");
         }
 
         if (storeDTO.getMessageToBuyers() != null && storeDTO.getMessageToBuyers().length() > 100) {
