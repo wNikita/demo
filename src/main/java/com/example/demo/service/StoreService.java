@@ -54,10 +54,10 @@ public class StoreService implements StoreServiceInterface {
         Store store = storeOptional.get();
         storeMapper.mapToEntity(updatedStoreDTO, store);
         if (storeRepository.existsByName(updatedStoreDTO.getName())) {
-            throw new DuplicateKeyException("Name already exists.");
+            throw new DuplicateKeyException("Store with the same name already exists.");
         }
         if (storeRepository.existsByEmail(updatedStoreDTO.getEmail())) {
-            throw new DuplicateKeyException("Email already exists.");
+            throw new DuplicateKeyException("Store with same email already exists.");
         }
         storeRepository.save(store);
 
