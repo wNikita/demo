@@ -2,28 +2,67 @@ package com.example.demo.service;
 
 import com.example.demo.dto.StoreDTO;
 import com.example.demo.model.Store;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.factory.Mappers;
 
-@Component
-public class StoreMapper {
-    private final ModelMapper modelMapper;
+@Mapper
+public interface StoreMapper {
 
-    public StoreMapper() {
-        modelMapper = new ModelMapper();
+    StoreMapper MAPPER = Mappers.getMapper(StoreMapper.class);
 
-    }
+    @Mapping(source = "status", target = "storeStatus")
+    @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "email", target = "email")
+    @Mapping(source = "title", target = "title")
+    @Mapping(source = "iconPath", target = "iconPath")
+    @Mapping(source = "storeAddress", target = "storeAddress")
+    @Mapping(source = "bannerPath", target = "bannerPath")
+    @Mapping(source = "storyTitle", target = "storyTitle")
+    @Mapping(source = "storyDescription", target = "storyDescription")
+    @Mapping(source = "announcementTitle", target = "announcementTitle")
+    @Mapping(source = "announcementDescription", target = "announcementDescription")
+    @Mapping(source = "messageToBuyers", target = "messageToBuyers")
+    @Mapping(source = "orderCustomizationAllowed", target = "orderCustomizationAllowed")
+    @Mapping(source = "vacationMode", target = "vacationMode")
+    @Mapping(source = "vacationAutoReply", target = "vacationAutoReply")
+    Store storeDTOtoStore(StoreDTO storeDTO);
 
-    public StoreDTO mapToStoreDTO(Store store) {
-        return modelMapper.map(store, StoreDTO.class);
-    }
+    @Mapping(source = "storeStatus", target = "status")
+    @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "email", target = "email")
+    @Mapping(source = "title", target = "title")
+    @Mapping(source = "iconPath", target = "iconPath")
+    @Mapping(source = "storeAddress", target = "storeAddress")
+    @Mapping(source = "bannerPath", target = "bannerPath")
+    @Mapping(source = "storyTitle", target = "storyTitle")
+    @Mapping(source = "storyDescription", target = "storyDescription")
+    @Mapping(source = "announcementTitle", target = "announcementTitle")
+    @Mapping(source = "announcementDescription", target = "announcementDescription")
+    @Mapping(source = "messageToBuyers", target = "messageToBuyers")
+    @Mapping(source = "orderCustomizationAllowed", target = "orderCustomizationAllowed")
+    @Mapping(source = "vacationMode", target = "vacationMode")
+    @Mapping(source = "vacationAutoReply", target = "vacationAutoReply")
+    StoreDTO storeToStoreDTO(Store store);
 
-    public Store mapToStore(StoreDTO storeDTO) {
-        return modelMapper.map(storeDTO, Store.class);
-    }
-
-    public void mapToEntity(StoreDTO storeDTO, Store store) {
-        modelMapper.map(storeDTO, store);
-    }
-
+    @Mapping(source = "status", target = "storeStatus")
+    @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "email", target = "email")
+    @Mapping(source = "title", target = "title")
+    @Mapping(source = "iconPath", target = "iconPath")
+    @Mapping(source = "storeAddress", target = "storeAddress")
+    @Mapping(source = "bannerPath", target = "bannerPath")
+    @Mapping(source = "storyTitle", target = "storyTitle")
+    @Mapping(source = "storyDescription", target = "storyDescription")
+    @Mapping(source = "announcementTitle", target = "announcementTitle")
+    @Mapping(source = "announcementDescription", target = "announcementDescription")
+    @Mapping(source = "messageToBuyers", target = "messageToBuyers")
+    @Mapping(source = "orderCustomizationAllowed", target = "orderCustomizationAllowed")
+    @Mapping(source = "vacationMode", target = "vacationMode")
+    @Mapping(source = "vacationAutoReply", target = "vacationAutoReply")
+    void entityMapping(StoreDTO storeDTO, @MappingTarget Store store);
 }

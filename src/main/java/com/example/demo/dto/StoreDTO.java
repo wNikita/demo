@@ -3,7 +3,7 @@ package com.example.demo.dto;
 public class StoreDTO {
 
     private int storeId;
-    private String storeStatus;
+    private String status;
     private String userId;
     private String name;
     private String email;
@@ -28,12 +28,12 @@ public class StoreDTO {
         this.storeId = storeId;
     }
 
-    public String getStoreStatus() {
-        return storeStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setStoreStatus(String storeStatus) {
-        this.storeStatus = storeStatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getUserId() {

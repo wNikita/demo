@@ -1,16 +1,26 @@
 package com.example.demo.validation;
 
+import com.example.demo.Comman.Constant;
+import com.example.demo.Comman.EmailValidate;
 import com.example.demo.dto.StoreDTO;
+import com.example.demo.repository.StoreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Component
 public class StoreValidator implements Validator {
+
+    private StoreRepository storeRepository;
+    @Autowired
+    private EmailValidate emailValidate;
+
+    public StoreValidator(StoreRepository storeRepository) {
+        this.storeRepository = storeRepository;
+    }
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -21,27 +31,34 @@ public class StoreValidator implements Validator {
     public void validate(Object target, Errors errors) {
         StoreDTO storeDTO = (StoreDTO) target;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storeStatus", "required.field");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userId", "required.field");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "required.field");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required.field");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "required.field");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "iconPath", "required.field");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storeAddress", "required.field");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storyTitle", "required.field");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storyDescription", "required.field");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "messageToBuyers", "required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "status", "storeStatus.required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "storeName.required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "storeEmail.required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "storeTitle.required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "iconPath", "storeIconPath.required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storeAddress", "storeAddress.required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storyTitle", "storyTitle.required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "storyDescription", "storyDescription.required.field");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "messageToBuyers", "messageToBuyers.required.field");
 
-        if (!isValidEmail(storeDTO.getEmail())) {
+        if (!emailValidate.isValidEmail(storeDTO.getEmail())) {
             errors.rejectValue("email", "field.invalidEmail");
         }
-        validateFieldLength(storeDTO.getStoreStatus(), "storeStatus", 15, errors);
-        validateFieldLength(storeDTO.getName(), "name", 50, errors);
-        validateFieldLength(storeDTO.getTitle(), "title", 100, errors);
-        validateFieldLength(storeDTO.getEmail(), "email", 50, errors);
-        validateFieldLength(storeDTO.getStoryTitle(), "storyTitle", 80, errors);
-        validateFieldLength(storeDTO.getAnnouncementTitle(), "announcementTitle", 50, errors);
-        validateFieldLength(storeDTO.getMessageToBuyers(), "messageToBuyer", 100, errors);
+        if (storeRepository.existsByName(storeDTO.getName())) {
+            errors.rejectValue("name", "unique.storeName");
+        }
+        if(storeRepository.existsByEmail(storeDTO.getEmail()))
+        {
+            errors.rejectValue("email","unique.email");
+        }
+
+        validateFieldLength(storeDTO.getStatus(), "status", Constant.STORE_STATUS, errors);
+        validateFieldLength(storeDTO.getName(), "name", Constant.STORE_NAME, errors);
+        validateFieldLength(storeDTO.getTitle(), "title", Constant.STORE_TITLE, errors);
+        validateFieldLength(storeDTO.getEmail(), "email", Constant.STORE_EMAIL, errors);
+        validateFieldLength(storeDTO.getStoryTitle(), "storyTitle", Constant.STORE_STORY_TITLE, errors);
+        validateFieldLength(storeDTO.getAnnouncementTitle(), "announcementTitle", Constant.STORE_ANNOUNCEMENT_TITLE, errors);
+        validateFieldLength(storeDTO.getMessageToBuyers(), "messageToBuyer", Constant.STORE_MESSAGE_TO_BUYER, errors);
 
     }
 
@@ -50,12 +67,6 @@ public class StoreValidator implements Validator {
             errors.rejectValue(fieldName, "field.too.long", new Object[]{maxLength}, "");
         }
     }
-
-    private boolean isValidEmail(String email) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
 }
+
 

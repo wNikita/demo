@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.Comman.Message;
 import com.example.demo.dto.StoreDTO;
-import com.example.demo.exception.DuplicateKeyException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Store;
 import com.example.demo.repository.StoreRepository;
@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.example.demo.Comman.MessageKeys.*;
+
 @Service
 public class StoreService implements StoreServiceInterface {
     private final StoreRepository storeRepository;
 
-    @Autowired
-    private StoreMapper storeMapper;
 
     @Autowired
     public StoreService(StoreRepository storeRepository) {
@@ -26,13 +26,7 @@ public class StoreService implements StoreServiceInterface {
 
     @Override
     public void createStore(StoreDTO storeDTO) {
-        if (storeRepository.existsByName(storeDTO.getName())) {
-            throw new DuplicateKeyException("Name already exists.");
-        }
-        if (storeRepository.existsByEmail(storeDTO.getEmail())) {
-            throw new DuplicateKeyException("Email already exists.");
-        }
-        Store store = storeMapper.mapToStore(storeDTO);
+        Store store = StoreMapper.MAPPER.storeDTOtoStore(storeDTO);
         storeRepository.save(store);
     }
 
@@ -40,25 +34,19 @@ public class StoreService implements StoreServiceInterface {
     public StoreDTO getStoreById(Long storeId) {
         Optional<Store> storeOptional = storeRepository.findByStoreId(storeId);
         if (storeOptional.isEmpty()) {
-            throw new ResourceNotFoundException("Store with ID " + storeId + " not found");
+            throw new ResourceNotFoundException(Message.get(STORE_NOT_FOUND));
         }
-        return storeMapper.mapToStoreDTO(storeOptional.get());
+        return StoreMapper.MAPPER.storeToStoreDTO(storeOptional.get());
     }
 
     @Override
     public void updateStore(Long storeId, StoreDTO updatedStoreDTO) {
         Optional<Store> storeOptional = storeRepository.findById(storeId);
         if (storeOptional.isEmpty()) {
-            throw new ResourceNotFoundException("Store with ID " + storeId + " not found");
+            throw new ResourceNotFoundException(Message.get(STORE_NOT_FOUND));
         }
         Store store = storeOptional.get();
-        storeMapper.mapToEntity(updatedStoreDTO, store);
-        if (storeRepository.existsByName(updatedStoreDTO.getName())) {
-            throw new DuplicateKeyException("Store with the same name already exists.");
-        }
-        if (storeRepository.existsByEmail(updatedStoreDTO.getEmail())) {
-            throw new DuplicateKeyException("Store with same email already exists.");
-        }
+        StoreMapper.MAPPER.entityMapping(updatedStoreDTO, store);
         storeRepository.save(store);
 
     }
@@ -67,20 +55,19 @@ public class StoreService implements StoreServiceInterface {
     public List<StoreDTO> getStoresByUserId(String userId) {
         List<Store> stores = storeRepository.findByUserId(userId);
         if (stores.isEmpty()) {
-            throw new ResourceNotFoundException("No stores found for user with ID: " + userId);
+            throw new ResourceNotFoundException(Message.get(USER_NOT_FOUND));
         }
-        return stores.stream().map(storeMapper::mapToStoreDTO).collect(Collectors.toList());
+        return stores.stream().map(StoreMapper.MAPPER::storeToStoreDTO).collect(Collectors.toList());
 
     }
-
 
     @Override
     public List<StoreDTO> getAllStore() {
         List<Store> stores = storeRepository.findAll();
         if (stores.isEmpty()) {
-            throw new ResourceNotFoundException("No stores are currently available");
+            throw new ResourceNotFoundException(Message.get(NO_STORE_AVAILABLE));
         }
-        return stores.stream().map(storeMapper::mapToStoreDTO).collect(Collectors.toList());
+        return stores.stream().map(StoreMapper.MAPPER::storeToStoreDTO).collect(Collectors.toList());
 
     }
 

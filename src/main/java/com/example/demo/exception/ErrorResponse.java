@@ -1,19 +1,21 @@
 package com.example.demo.exception;
 
+
+import com.example.demo.dto.ErrorDetails;
+
 import java.util.List;
 
-public class ErrorResponse {
-    private List<String> errors;
 
-    public ErrorResponse(List<String> errors) {
+public class ErrorResponse extends RuntimeException {
+    private List<ErrorDetails> errors;
+
+
+    public ErrorResponse(List<ErrorDetails> errors) {
+        super("Errors occurred");
         this.errors = errors;
     }
 
-    public List<String> getErrors() {
+    public List<ErrorDetails> getErrors() {
         return errors;
-    }
-
-    public void setErrors(List<String> errors) {
-        this.errors = errors;
     }
 }
